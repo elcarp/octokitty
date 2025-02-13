@@ -18,7 +18,7 @@ export default function Home() {
           height={400}
           alt='octokitty'
         />
-        <input
+        <input className={styles.slideUp}
           style={{
             padding: '1rem',
             width: '100%',

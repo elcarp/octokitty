@@ -1,5 +1,8 @@
 :root {
-  --background: #ffffff;
+  --background: #eee;
   --foreground: #171717;
 }
-
+body { 
+  margin: 0;
+  background: #eee;
+}
