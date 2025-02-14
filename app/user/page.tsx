@@ -1,9 +1,7 @@
 'use client'
-import React, { Suspense, useMemo } from 'react'
-import useGitHubRepos from '~hooks/useGitHubRepos'
-import { useRouter, useSearchParams } from 'next/navigation'
+import React, { Suspense } from 'react'
+import { useRouter } from 'next/navigation'
 import styles from './page.module.css'
-import Image from 'next/image'
 import { useLanguage } from '~context/LanguageContext'
 import UserDetails from './userdetails'
 
@@ -18,8 +16,6 @@ export default function User() {
       </Suspense>
     )
   }
-
-
 
   return (
     <>
