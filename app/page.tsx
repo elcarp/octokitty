@@ -26,11 +26,13 @@ export default function Home() {
       <div className={styles.page}>
         <div style={{ textAlign: 'center' }}>
           <h1 className={styles.slideUp}>
-            {language == 'en' ? 'Hello.' : 'Henlo frien.'} <br />
+            {language == 'en' ? 'Hello.' : 'Henlo frien.'}
+            <br />{' '}
             {language == 'en'
               ? 'Can I fetch a profile for you?'
               : 'Shall I retrievz a purrfile fur u?'}
           </h1>
+
           <Image
             className={styles.slideUp}
             priority

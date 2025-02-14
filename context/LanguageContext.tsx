@@ -15,22 +15,23 @@ export const LanguageProvider = ({
 }: {
   children: React.ReactNode
 }) => {
-  const [language, setLanguage] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('language') || 'en'
-    }
-    return 'en'
-  })
+  const [language, setLanguage] = useState<string>('loading') // Start with "loading"
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    const storedLanguage = localStorage.getItem('language') || 'en'
+    setLanguage(storedLanguage)
+  }, [])
+
+  useEffect(() => {
+    if (language !== 'loading') {
       localStorage.setItem('language', language)
     }
   }, [language])
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage }}>
-      {children}
+      {language !== 'loading' && children}{' '}
+      {/* Prevents rendering until language loads */}
     </LanguageContext.Provider>
   )
 }

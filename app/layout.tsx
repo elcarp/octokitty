@@ -34,10 +34,13 @@ export default function RootLayout({
     </LanguageProvider>
   )
 }
-
 const LanguageSwitcher = () => {
   const { language, setLanguage } = useLanguage()
-  const isEnglish = language == 'en'
+
+  if (language === 'loading') return null // Prevent rendering until language loads
+
+  const isEnglish = language === 'en'
+
   return (
     <nav
       style={{
@@ -88,7 +91,7 @@ const LanguageSwitcher = () => {
           </span>
         </label>
         <span>🇬🇧</span>
-      </div>{' '}
+      </div>
     </nav>
   )
 }
