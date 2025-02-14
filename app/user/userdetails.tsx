@@ -52,8 +52,8 @@ const UserDetails = () => {
         :
       </p>
       <ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
-        {repos && repos.length > 0
-          ? repos.map((repo) => (
+        {memoizedRepos && memoizedRepos.length > 0
+          ? memoizedRepos.map((repo) => (
               <li key={repo.id}>
                 {repo.name} {repo.description && `- ${repo.description}`}
               </li>
