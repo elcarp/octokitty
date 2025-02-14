@@ -1,8 +1,8 @@
 'use client'
-import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import { LanguageProvider, useLanguage } from '~context/LanguageContext'
+import Head from 'next/head'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -14,11 +14,6 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 })
 
-// export const metadata: Metadata = {
-//   title: "Octokitty's lair",
-//   description: 'Find a github user',
-// }
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -27,6 +22,10 @@ export default function RootLayout({
   return (
     <LanguageProvider>
       <html>
+        <Head>
+          <title>{"Octokitty's Lair"}</title>
+          <meta name='description' content={'Find a GitHub user'} />
+        </Head>
         <body className={`${geistSans.variable} ${geistMono.variable}`}>
           <LanguageSwitcher />
           {children}
