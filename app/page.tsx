@@ -23,26 +23,28 @@ export default function Home() {
 
   return (
     <>
-      <nav
-        style={{
-          display: 'flex',
-          justifyContent: 'end',
-          marginRight: '3rem',
-          marginTop: '1rem',
-          fontSize: '1.5rem',
-        }}>
-        <span
-          style={{ cursor: 'pointer', marginRight: '1rem' }}
-          onClick={() => setLanguage('en')}>
-          🇬🇧
-        </span>
-        |
-        <span
-          style={{ cursor: 'pointer', marginLeft: '1rem' }}
-          onClick={() => setLanguage('🐈')}>
-          🐈
-        </span>
-      </nav>
+      <div>
+        <nav
+          style={{
+            display: 'flex',
+            justifyContent: 'end',
+            marginRight: '3rem',
+            marginTop: '1rem',
+            fontSize: '1.5rem',
+          }}>
+          <span
+            style={{ cursor: 'pointer', marginRight: '1rem' }}
+            onClick={() => setLanguage('en')}>
+            🇬🇧
+          </span>
+          |
+          <span
+            style={{ cursor: 'pointer', marginLeft: '1rem' }}
+            onClick={() => setLanguage('🐈')}>
+            🐈
+          </span>
+        </nav>
+      </div>
       <div className={styles.page}>
         <div style={{ textAlign: 'center' }}>
           <h1 className={styles.slideUp} style={{ lineHeight: '3.8rem' }}>
