@@ -31,14 +31,13 @@ export default function Home() {
               ? 'Can I fetch a profile for you?'
               : 'Shall I retrievz a purrfile fur u?'}
           </h1>
-
           <Image
             className={styles.slideUp}
             priority
             style={{ display: 'block', margin: 'auto' }}
             src={octocat}
-            width={400}
-            height={400}
+            width={350}
+            height={350}
             alt='octokitty'
           />
           <input

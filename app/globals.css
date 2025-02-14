@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  overflow: scroll !important;
 }
 html {
   background: linear-gradient(51deg, #dad9d9, #b5b5b5, #9d8989, #6d6868);

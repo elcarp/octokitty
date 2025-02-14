@@ -3,8 +3,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
   padding-bottom: 4rem;
+  max-width: 90vw;
+  margin: auto;
+}
+.page image {
+  width: 100%;
+  position: relative;
+  height: 100%;
 }
 .page h1 {
   font-size: 3rem;
@@ -35,7 +41,7 @@
   }
 }
 
-@media(max-width: 768px) {
+@media (max-width: 768px) {
   .page input {
     width: 80vw;
   }
