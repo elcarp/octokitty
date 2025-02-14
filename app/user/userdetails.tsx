@@ -13,7 +13,7 @@ const UserDetails = () => {
   const { user, repos, page, setPage } = useGitHubRepos(username || '')
   const memoizedUser = useMemo(() => user, [user])
   const memoizedRepos = useMemo(() => repos, [repos])
-
+  console.log(page)
   return (
     <>
       <p>
@@ -42,14 +42,14 @@ const UserDetails = () => {
             }}
           />
         )}
-      </div>  
+      </div>
       <p>
         {typeof language === 'string'
           ? 'Repositories'
           : language.language === 'en'
           ? 'Repositories'
           : 'Repawsitories'}
-        :
+        : {memoizedUser?.public_repos}
       </p>
       <ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
         {memoizedRepos && memoizedRepos.length > 0
@@ -60,8 +60,13 @@ const UserDetails = () => {
             ))
           : 'none'}
       </ul>
-      {page && page > 1 && (
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
+      {page && (memoizedUser?.public_repos ?? 0) > 10 && (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '10px',
+          }}>
           <button
             onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
             disabled={page === 1}>
