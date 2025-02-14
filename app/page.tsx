@@ -7,11 +7,12 @@ import octocat from '~public/images/octocat-nobg.png'
 import React from 'react'
 import useGitHubRepos from '~hooks/useGitHubRepos'
 import { useRouter } from 'next/navigation'
+import { useLanguage } from '~context/LanguageContext'
 
 export default function Home() {
-  const [language, setLanguage] = React.useState('en')
   const [username, setUsername] = React.useState('')
   const { loading, error, user } = useGitHubRepos(username)
+  const { language } = useLanguage()
 
   const router = useRouter()
 
@@ -20,34 +21,11 @@ export default function Home() {
       router.push(`/user?username=${username}`)
     }
   }
-
   return (
     <>
-      <div>
-        <nav
-          style={{
-            display: 'flex',
-            justifyContent: 'end',
-            marginRight: '3rem',
-            marginTop: '1rem',
-            fontSize: '1.5rem',
-          }}>
-          <span
-            style={{ cursor: 'pointer', marginRight: '1rem' }}
-            onClick={() => setLanguage('en')}>
-            🇬🇧
-          </span>
-          |
-          <span
-            style={{ cursor: 'pointer', marginLeft: '1rem' }}
-            onClick={() => setLanguage('🐈')}>
-            🐈
-          </span>
-        </nav>
-      </div>
       <div className={styles.page}>
         <div style={{ textAlign: 'center' }}>
-          <h1 className={styles.slideUp} style={{ lineHeight: '3.8rem' }}>
+          <h1 className={styles.slideUp}>
             {language == 'en' ? 'Hello.' : 'Henlo frien.'} <br />
             {language == 'en'
               ? 'Can I fetch a profile for you?'
@@ -64,13 +42,6 @@ export default function Home() {
           />
           <input
             className={styles.slideUp}
-            style={{
-              padding: '1rem',
-              width: '40vw',
-              borderRadius: '1rem',
-              fontSize: '1rem',
-              boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-            }}
             type='text'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
