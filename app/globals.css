@@ -1,22 +1,17 @@
 body {
   margin: 0;
-  overflow: scroll !important;
 }
+
 html {
   background: linear-gradient(51deg, #dad9d9, #b5b5b5, #9d8989, #6d6868);
   background-size: 240% 240%;
   animation: gradient-animation 16s ease infinite;
+  overflow: auto;
 }
 nav {
   position: sticky;
   top: 0;
 }
-.gradient-background {
-  background: linear-gradient(51deg, #dad9d9, #b5b5b5, #9d8989, #6d6868);
-  background-size: 240% 240%;
-  animation: gradient-animation 16s ease infinite;
-}
-
 @keyframes gradient-animation {
   0% {
     background-position: 0% 50%;
