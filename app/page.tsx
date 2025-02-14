@@ -1,5 +1,4 @@
 'use client'
-/* eslint-disable react/no-unescaped-entities */
 
 import Image from 'next/image'
 import styles from './page.module.css'
