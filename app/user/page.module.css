@@ -1,0 +1,29 @@
+.page {
+  font-family: var(--font-geist-sans);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding-bottom: 4rem;
+}
+.page h1 {
+  font-size:3rem;
+  color: #333;
+}
+
+.slideUp {
+  animation: 1.8s slideUp ease;
+  animation-fill-mode: forwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translatey(40%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translatey(-12%);
+  }
+}

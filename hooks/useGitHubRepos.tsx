@@ -41,7 +41,6 @@ const useGitHubData = (username: string) => {
     try {
       const response = await octokit.rest.repos.listForUser({
         username,
-        per_page: 10, // Fetch only the first 10 repositories
         sort: 'updated',
       })
 

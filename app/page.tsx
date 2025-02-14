@@ -1,4 +1,6 @@
 'use client'
+/* eslint-disable react/no-unescaped-entities */
+
 import Image from 'next/image'
 import styles from './page.module.css'
 import octocat from '~public/images/octocat-nobg.png'
@@ -7,7 +9,7 @@ import useGitHubRepos from '~hooks/useGitHubRepos'
 import { useRouter } from 'next/navigation'
 
 export default function Home() {
-  const [language, setLanguage] = React.useState('🇬🇧')
+  const [language, setLanguage] = React.useState('en')
   const [username, setUsername] = React.useState('')
   const { loading, error, user } = useGitHubRepos(username)
 
@@ -18,7 +20,6 @@ export default function Home() {
       router.push(`/user?username=${username}`)
     }
   }
-  console.log(user, 'user?')
 
   return (
     <>
@@ -32,7 +33,7 @@ export default function Home() {
         }}>
         <span
           style={{ cursor: 'pointer', marginRight: '1rem' }}
-          onClick={() => setLanguage('🇬🇧')}>
+          onClick={() => setLanguage('en')}>
           🇬🇧
         </span>
         |
@@ -45,8 +46,8 @@ export default function Home() {
       <div className={styles.page}>
         <div style={{ textAlign: 'center' }}>
           <h1 className={styles.slideUp} style={{ lineHeight: '3.8rem' }}>
-            {language == '🇬🇧' ? 'Hello.' : 'Henlo frien.'} <br />
-            {language == '🇬🇧'
+            {language == 'en' ? 'Hello.' : 'Henlo frien.'} <br />
+            {language == 'en'
               ? 'Can I fetch a profile for you?'
               : 'Shall I retrievz a purrfile fur u?'}
           </h1>
@@ -71,44 +72,49 @@ export default function Home() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder={
-              language == '🇬🇧'
+              language == 'en'
                 ? 'Please enter a Github username'
                 : 'Pawlease typez a GitHub name, frien'
             }
           />
-          {loading && <p>Loading...</p>}
-          {error && <p className='text-red-500'>{error}</p>}
+          {loading && (
+            <p>
+              {language == 'en'
+                ? 'Loading...'
+                : 'Spinning… spinning… send treatz to speed up!'}
+            </p>
+          )}
+          {error && <p>{error}</p>}
           <div style={{ textAlign: 'center' }}>
             {user && (
-              <>
+              <div onClick={handleClick} style={{ cursor: 'pointer' }}>
                 <p>{user && user.login}</p>
                 <Image
                   src={user.avatar_url}
                   alt={user.login}
                   width={100}
                   height={100}
-                  style={{ borderRadius: '3rem', margin: 'auto' }}
+                  style={{
+                    borderRadius: '4rem',
+                    border: 'solid 2px black',
+                    margin: 'auto',
+                    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+                  }}
                 />
-                <button style={{ display: 'block', margin: 'auto' }} onClick={handleClick}>
-                  Let's go
+                <button
+                  style={{
+                    display: 'block',
+                    margin: 'auto',
+                    marginTop: '1rem',
+                  }}
+                  onClick={handleClick}>
+                  {language == 'en'
+                    ? 'View Repositories'
+                    : 'See da re-paws-itories?'}
                 </button>
-              </>
+              </div>
             )}
           </div>
-          {/* <ul>
-            {repos.map((repo) => (
-              <li key={repo.id} className='mb-2'>
-                <a
-                  href={repo.html_url}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className='text-blue-500'>
-                  {repo.name} ⭐ {repo.stargazers_count} | 🍴 {repo.forks_count}
-                </a>
-                <p>{repo.description}</p>
-              </li>
-            ))}
-          </ul> */}
         </div>
       </div>
     </>
