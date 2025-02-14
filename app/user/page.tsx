@@ -3,7 +3,7 @@ import React, { Suspense } from 'react'
 import useGitHubRepos from '~hooks/useGitHubRepos'
 import { useRouter, useSearchParams } from 'next/navigation'
 import styles from './page.module.css'
-import Image from 'next/image'
+// import Image from 'next/image'
 
 export default function User() {
   // const searchParams = useSearchParams()
