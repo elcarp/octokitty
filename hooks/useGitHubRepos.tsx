@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { Octokit } from '@octokit/rest'
 
 const octokit = new Octokit({
-  auth: process.env.NEXT_PUBLIC_GITHUB_TOKEN,
+  auth: process.env.NEXT_PUBLIC_GITHUB_TOKEN, // Use token for authentication
   log: { debug: () => {}, info: () => {}, warn: console.warn, error: () => {} }, // Suppress Octokit request logs for 404 errors
 })
 
@@ -10,7 +10,7 @@ interface Repo {
   id: number
   name: string
   html_url: string
-  description: string
+  description: string | null
   stargazers_count: number
   forks_count: number
 }
@@ -31,6 +31,7 @@ const useGitHubData = (username: string) => {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
+  const [page, setPage] = useState(1)
 
   const fetchRepos = useCallback(async () => {
     if (!username || username.trim() === '') return
@@ -41,6 +42,8 @@ const useGitHubData = (username: string) => {
     try {
       const response = await octokit.rest.repos.listForUser({
         username,
+        per_page: 10, // Fetch 10 repositories per page
+        page,
         sort: 'updated',
       })
 
@@ -50,7 +53,7 @@ const useGitHubData = (username: string) => {
           name: repo.name,
           html_url: repo.html_url,
           description: repo.description,
-          stargazers_count: repo.stargazers_count,
+          stargazers_count: repo.stargazers_count ?? 0,
           forks_count: repo.forks_count,
         }))
       )
@@ -64,7 +67,7 @@ const useGitHubData = (username: string) => {
     } finally {
       setLoading(false)
     }
-  }, [username])
+  }, [username, page])
 
   const fetchUserInfo = useCallback(async () => {
     if (!username || username.trim() === '') return
@@ -72,19 +75,21 @@ const useGitHubData = (username: string) => {
     setLoading(true)
     setError(null)
 
-    try {
-      const response = await octokit.rest.users.getByUsername({ username })
-      setUser(response.data)
-    } catch (err: any) {
-      if (err.status === 404) {
-        setError('User not found. Please check the username.')
-        console.warn(`GitHub user "${username}" not found. (404)`)
-      } else {
-        setError(err.message || 'Failed to fetch user information.')
+    setTimeout(async () => {
+      try {
+        const response = await octokit.rest.users.getByUsername({ username })
+        setUser(response.data)
+      } catch (err: any) {
+        if (err.status === 404) {
+          setError('User not found. Please check the username.')
+          console.warn(`GitHub user "${username}" not found. (404)`)
+        } else {
+          setError(err.message || 'Failed to fetch user information.')
+        }
+      } finally {
+        setLoading(false)
       }
-    } finally {
-      setLoading(false)
-    }
+    }, 500) // Adding a 500ms delay before API call
   }, [username])
 
   useEffect(() => {
@@ -92,7 +97,7 @@ const useGitHubData = (username: string) => {
     fetchUserInfo()
   }, [fetchRepos, fetchUserInfo])
 
-  return { repos, user, loading, error }
+  return { repos, user, loading, error, page, setPage }
 }
 
 export default useGitHubData
