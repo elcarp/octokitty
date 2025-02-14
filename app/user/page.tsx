@@ -6,9 +6,10 @@ import { useLanguage } from '~context/LanguageContext'
 import UserDetails from './userdetails'
 
 export default function User() {
+
   const router = useRouter()
   const language = useLanguage()
-  console.log(language, 'language')
+  
   const UserComponent = () => {
     return (
       <Suspense fallback={<p>Loading user details...</p>}>
