@@ -20,7 +20,6 @@ export default function User() {
     const searchParams = useSearchParams()
     const username = searchParams.get('username')
     const { user, repos, page, setPage } = useGitHubRepos(username || '')
-
     return (
       <>
         <p>Username: {user && user.login}</p>
@@ -38,24 +37,27 @@ export default function User() {
             }}
           />
         )}
-        <p>Repositories (Page {page}):</p>
+        <p>Repositories:</p>
         <ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
-          {repos &&
-            repos.map((repo) => (
-              <li key={repo.id}>
-                {repo.name} {repo.description && `- ${repo.description}`}
-              </li>
-            ))}
+          {repos && repos.length > 0
+            ? repos.map((repo) => (
+                <li key={repo.id}>
+                  {repo.name} {repo.description && `- ${repo.description}`}
+                </li>
+              ))
+            : 'none'}
         </ul>
-
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
-          <button
-            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-            disabled={page === 1}>
-            Previous
-          </button>
-          <button onClick={() => setPage((prev) => prev + 1)}>Next</button>
-        </div>
+        {page && page > 1 && (
+          <div
+            style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
+            <button
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              disabled={page === 1}>
+              Previous
+            </button>
+            <button onClick={() => setPage((prev) => prev + 1)}>Next</button>
+          </div>
+        )}
       </>
     )
   }
