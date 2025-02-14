@@ -1,4 +1,10 @@
-import { useState, useEffect, useCallback } from 'react'
+import {
+  useState,
+  useEffect,
+  useCallback,
+  createContext,
+  useContext,
+} from 'react'
 import { Octokit } from '@octokit/rest'
 
 const octokit = new Octokit({
@@ -11,8 +17,8 @@ interface Repo {
   name: string
   html_url: string
   description: string | null
-  stargazers_count: number
-  forks_count: number
+  stargazers_count?: number
+  forks_count?: number
 }
 
 interface User {
@@ -24,6 +30,43 @@ interface User {
   public_repos: number
   followers: number
   following: number
+}
+
+const LanguageContext = createContext<
+  { language: string; setLanguage: (lang: string) => void } | undefined
+>(undefined)
+
+export const LanguageProvider = ({
+  children,
+}: {
+  children: React.ReactNode
+}) => {
+  const [language, setLanguage] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('language') || 'en'
+    }
+    return 'en'
+  })
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('language', language)
+    }
+  }, [language])
+
+  return (
+    <LanguageContext.Provider value={{ language, setLanguage }}>
+      {children}
+    </LanguageContext.Provider>
+  )
+}
+
+export const useLanguage = () => {
+  const context = useContext(LanguageContext)
+  if (!context) {
+    throw new Error('useLanguage must be used within a LanguageProvider')
+  }
+  return context
 }
 
 const useGitHubData = (username: string) => {
@@ -42,21 +85,12 @@ const useGitHubData = (username: string) => {
     try {
       const response = await octokit.rest.repos.listForUser({
         username,
-        per_page: 10,
+        per_page: 10, // Fetch 10 repositories per page
         page,
         sort: 'updated',
       })
 
-      setRepos(
-        response.data.map((repo: any) => ({
-          id: repo.id,
-          name: repo.name,
-          html_url: repo.html_url,
-          description: repo.description,
-          stargazers_count: repo.stargazers_count ?? 0,
-          forks_count: repo.forks_count,
-        }))
-      )
+      setRepos(response.data)
     } catch (err: any) {
       if (err.status === 404) {
         setError('User not found. Please check the username.')

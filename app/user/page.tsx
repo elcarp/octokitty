@@ -4,10 +4,12 @@ import useGitHubRepos from '~hooks/useGitHubRepos'
 import { useRouter, useSearchParams } from 'next/navigation'
 import styles from './page.module.css'
 import Image from 'next/image'
+import { useLanguage } from '~context/LanguageContext'
 
 export default function User() {
   const router = useRouter()
-
+  const language = useLanguage()
+  console.log(language, 'language')
   const UserComponent = () => {
     return (
       <Suspense fallback={<p>Loading user details...</p>}>
@@ -22,7 +24,10 @@ export default function User() {
     const { user, repos, page, setPage } = useGitHubRepos(username || '')
     return (
       <>
-        <p>Username: {user && user.login}</p>
+        <p>
+          {language.language === 'en' ? 'Username' : 'Meowsername'}:{' '}
+          {user && user.login}
+        </p>
         {user && (
           <Image
             src={user.avatar_url}
@@ -37,7 +42,7 @@ export default function User() {
             }}
           />
         )}
-        <p>Repositories:</p>
+        <p>{language.language == 'en' ? 'Repositories' : 'Repawsitories'}:</p>
         <ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
           {repos && repos.length > 0
             ? repos.map((repo) => (
@@ -65,7 +70,7 @@ export default function User() {
   return (
     <>
       <span style={{ cursor: 'pointer' }} onClick={() => router.push('/')}>
-        &larr; Go back
+        &larr; {language.language == 'en' ? 'Go back' : 'Go back, meow'}
       </span>
       <div className={styles.page}>
         <div>
