@@ -23,7 +23,7 @@ export default function User() {
   const UserDetails = () => {
     const searchParams = useSearchParams()
     const username = searchParams.get('username')
-    const { loading, error, user, repos } = useGitHubRepos(username || '')
+    const { user } = useGitHubRepos(username || '')
 
     return <p>Username: {user && user.login}</p>
   }
@@ -52,7 +52,7 @@ export default function User() {
               />
             )} */}
             <UserComponent />
-            Repositories: 
+            Repositories:
             {/* {repos && repos.length} */}
             {/* {repos &&
               repos.map((repo) => {
