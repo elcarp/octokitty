@@ -1,14 +1,17 @@
-
-body { 
+body {
   margin: 0;
 }
 html {
-  background: linear-gradient(51deg,#dad9d9,#b5b5b5,#9d8989,#6d6868);
+  background: linear-gradient(51deg, #dad9d9, #b5b5b5, #9d8989, #6d6868);
   background-size: 240% 240%;
   animation: gradient-animation 16s ease infinite;
 }
+nav {
+  position: sticky;
+  top: 0;
+}
 .gradient-background {
-  background: linear-gradient(51deg,#dad9d9,#b5b5b5,#9d8989,#6d6868);
+  background: linear-gradient(51deg, #dad9d9, #b5b5b5, #9d8989, #6d6868);
   background-size: 240% 240%;
   animation: gradient-animation 16s ease infinite;
 }

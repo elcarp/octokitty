@@ -4,11 +4,21 @@ import styles from './page.module.css'
 import octocat from '~public/images/octocat-nobg.png'
 import React from 'react'
 import useGitHubRepos from '~hooks/useGitHubRepos'
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
   const [language, setLanguage] = React.useState('🇬🇧')
   const [username, setUsername] = React.useState('')
-  const { repos, loading, error } = useGitHubRepos(username)
+  const { loading, error, user } = useGitHubRepos(username)
+
+  const router = useRouter()
+
+  const handleClick = () => {
+    if (username.length > 0) {
+      router.push(`/user?username=${username}`)
+    }
+  }
+  console.log(user, 'user?')
 
   return (
     <>
@@ -66,10 +76,26 @@ export default function Home() {
                 : 'Pawlease typez a GitHub name, frien'
             }
           />
-
           {loading && <p>Loading...</p>}
           {error && <p className='text-red-500'>{error}</p>}
-          <ul className='mt-4'>
+          <div style={{ textAlign: 'center' }}>
+            {user && (
+              <>
+                <p>{user && user.login}</p>
+                <Image
+                  src={user.avatar_url}
+                  alt={user.login}
+                  width={100}
+                  height={100}
+                  style={{ borderRadius: '3rem', margin: 'auto' }}
+                />
+                <button style={{ display: 'block', margin: 'auto' }} onClick={handleClick}>
+                  Let's go
+                </button>
+              </>
+            )}
+          </div>
+          {/* <ul>
             {repos.map((repo) => (
               <li key={repo.id} className='mb-2'>
                 <a
@@ -79,10 +105,10 @@ export default function Home() {
                   className='text-blue-500'>
                   {repo.name} ⭐ {repo.stargazers_count} | 🍴 {repo.forks_count}
                 </a>
-                <p className='text-gray-600 text-sm'>{repo.description}</p>
+                <p>{repo.description}</p>
               </li>
             ))}
-          </ul>
+          </ul> */}
         </div>
       </div>
     </>
