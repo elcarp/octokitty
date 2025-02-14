@@ -55,6 +55,7 @@ export default function Home() {
           </h1>
           <Image
             className={styles.slideUp}
+            priority
             style={{ display: 'block', margin: 'auto' }}
             src={octocat}
             width={400}
