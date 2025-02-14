@@ -6,10 +6,9 @@ import { useLanguage } from '~context/LanguageContext'
 import UserDetails from './userdetails'
 
 export default function User() {
-
   const router = useRouter()
   const language = useLanguage()
-  
+
   const UserComponent = () => {
     return (
       <Suspense fallback={<p>Loading user details...</p>}>
@@ -20,14 +19,12 @@ export default function User() {
 
   return (
     <>
-      <span style={{ cursor: 'pointer' }} onClick={() => router.push('/')}>
-        &larr; {language.language == 'en' ? 'Go back' : 'Go back, meow'}
-      </span>
       <div className={styles.page}>
         <div>
-          <div>
-            <UserComponent />
-          </div>
+          <span style={{ cursor: 'pointer' }} onClick={() => router.push('/')}>
+            &larr; {language.language == 'en' ? 'Go back' : 'Go back, meow'}
+          </span>
+          <UserComponent />
         </div>
       </div>
     </>
