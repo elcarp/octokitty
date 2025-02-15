@@ -71,13 +71,20 @@ export default function Home() {
               }
             />
           </div>
-          <div style={{height: '14rem'}}>
+          <div style={{ height: '14rem' }}>
             {(loadingUser || loadingRepos) && (
-              <p className={mansalva.className} style={{ paddingTop: '1rem' }}>
-                {language == 'en'
-                  ? 'Loading...'
-                  : 'Spinning… spinning… send treatz to speed up!'}
-              </p>
+              <>
+                <p
+                  className={mansalva.className}
+                  style={{ paddingTop: '1rem' }}>
+                  {language == 'en'
+                    ? 'Loading...'
+                    : 'Spinning… spinning… send treatz to speed up!'}
+                </p>
+                <div className={styles.loaderContainer}>
+                  <span className={styles.loader}></span>
+                </div>
+              </>
             )}
             {error && <p>{error}</p>}
             <div style={{ textAlign: 'center' }}>
