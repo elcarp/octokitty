@@ -1,0 +1,68 @@
+.container {
+  text-align: center;
+  margin: auto;
+  padding-top: 5rem;
+  max-width: 90%;
+}
+
+.container h1 {
+  font-size: 5rem;
+  color: #333;
+}
+
+.container p {
+  font-size: 1.5rem;
+  color: #555;
+  margin-top: 1rem;
+}
+
+.button {
+  padding: 0.8rem 1.5rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  background-color: #ff6f61;
+  color: white;
+  display: block;
+  margin: 2rem auto;
+  transition: background 0.3s ease-in-out;
+}
+
+.button:hover {
+  background-color: #e65b50;
+}
+
+.bounce {
+  animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.shake {
+  animation: shake 1.5s infinite;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(2deg);
+  }
+  50% {
+    transform: rotate(-2deg);
+  }
+  75% {
+    transform: rotate(1deg);
+  }
+}
