@@ -15,18 +15,19 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 })
 
-// ✅ Next.js App Router handles <html> and <body>, so do NOT include them here
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <LanguageProvider>
-      <div className={`${geistSans.variable} ${geistMono.variable}`}>
-        <LanguageSwitcher />
-        {children}
-      </div>
-    </LanguageProvider>
+    <html lang='en'>
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <LanguageProvider>
+          <LanguageSwitcher />
+          <main>{children}</main> 
+        </LanguageProvider>
+      </body>
+    </html>
   )
 }
