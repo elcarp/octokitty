@@ -4,6 +4,7 @@ import './globals.css'
 import { LanguageProvider } from '~context/LanguageContext'
 import LanguageSwitcher from '~components/languageSwitcher'
 import Head from 'next/head'
+import Footer from '~components/footer'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -33,6 +34,7 @@ export default function RootLayout({
         <LanguageProvider>
           <LanguageSwitcher />
           <main>{children}</main>
+          <Footer />
         </LanguageProvider>
       </body>
     </html>

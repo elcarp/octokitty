@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import styles from './page.module.css'
 import octocat from '~public/images/octocat-nobg.png'
-import React from 'react'
+import React, { useRef } from 'react'
 import useGitHubRepos from '~hooks/useGitHubRepos'
 import { useRouter } from 'next/navigation'
 import { useLanguage } from '~context/LanguageContext'
@@ -22,6 +22,7 @@ export default function Home() {
 
   const { language } = useLanguage()
   const router = useRouter()
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const handleClick = React.useCallback(() => {
     if (debouncedUsername.trim().length > 0) {
@@ -35,6 +36,11 @@ export default function Home() {
     },
     []
   )
+
+  const handleInputFocus = React.useCallback(() => {
+    inputRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [])
+
   return (
     <>
       <div className={styles.page}>
@@ -58,9 +64,11 @@ export default function Home() {
           />
           <div>
             <input
+              ref={inputRef}
               className={`${styles.slideUp} ${styles.customInput}`}
               type='text'
               value={username}
+              onFocus={handleInputFocus}
               onChange={handleInputChange}
               placeholder={
                 language == 'en'
