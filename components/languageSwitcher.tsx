@@ -14,6 +14,7 @@ const LanguageSwitcher = () => {
     marginRight: '3rem',
     marginTop: '1rem',
     fontSize: '1.5rem',
+    zIndex: 2,
   }
 
   const switchContainerStyle: React.CSSProperties = {
