@@ -64,7 +64,7 @@ const UserDetails = () => {
           <h2 className={mansalva.className} style={{ paddingBottom: '.5rem' }}>
             {user.name}
           </h2>
-          <span style={{ display: 'flex' }}>
+          <span style={{ display: 'flex', justifyContent: 'center' }}>
             <FontAwesomeIcon icon={faGithub} width={20} />
             <span style={{ marginLeft: '.3rem' }}>{user.login}</span>
           </span>
