@@ -9,7 +9,7 @@ export default function useDebounce<T>(value: T, delay: number = 500): T {
     }, delay)
 
     return () => {
-      clearTimeout(handler) // Clears timeout if value changes before delay ends
+      clearTimeout(handler) 
     }
   }, [value, delay])
 
