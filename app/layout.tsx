@@ -4,7 +4,6 @@ import './globals.css'
 import { LanguageProvider } from '~context/LanguageContext'
 import LanguageSwitcher from '~components/languageSwitcher'
 
-// ✅ Correct way to add fonts in Next.js
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
