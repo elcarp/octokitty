@@ -28,18 +28,9 @@ export default function User() {
     return translations[key][typedLanguage] || ''
   }
 
-  const containerStyle: React.CSSProperties = {
-    margin: 'auto',
-    marginTop: '2rem',
-    display: 'flex',
-    alignItems: 'top',
-    minHeight: '80vh',
-    textAlign: 'center',
-  }
-
   return (
     <div className={styles.page}>
-      <div style={containerStyle}>
+      <div className={styles.container}>
         <div>
           <span
             style={{ cursor: 'pointer', fontSize: '3rem' }}

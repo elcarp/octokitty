@@ -11,6 +11,15 @@
   color: #333;
 }
 
+.container {
+  margin: 'auto';
+  margin-top: '2rem';
+  display: 'flex';
+  align-items: 'top';
+  min-height: '80vh';
+  text-align: 'center';
+}
+
 .slideUp {
   animation: 1.8s slideUp ease;
   animation-fill-mode: forwards;
