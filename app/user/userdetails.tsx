@@ -2,24 +2,50 @@ import { useSearchParams } from 'next/navigation'
 import { useLanguage } from '~context/LanguageContext'
 import useGitHubData from '~hooks/useGitHubData'
 import Image from 'next/image'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './page.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
-import { Mansalva } from 'next/font/google'
 import Link from 'next/link'
-
-const mansalva = Mansalva({ subsets: ['latin'], weight: '400' })
 
 const UserDetails = () => {
   const { language } = useLanguage() as { language: 'en' | 'cat' }
   const searchParams = useSearchParams()
   const username = searchParams.get('username')
-  const { user, repos, page, setPage } = useGitHubData(username || '')
+  const { user, repos, page, setPage, loadingRepos } = useGitHubData(
+    username || ''
+  )
 
-  const getText = (key: 'publicRepos' | 'previous' | 'next') => {
+  const [isPageLoading, setIsPageLoading] = useState(false)
+
+  const totalPages = user ? Math.ceil(user.public_repos / 5) : 1
+
+  const handleNextPage = () => {
+    if (page < totalPages) {
+      setIsPageLoading(true)
+      setPage((prev) => prev + 1)
+    }
+  }
+
+  const handlePrevPage = () => {
+    if (page > 1) {
+      setIsPageLoading(true)
+      setPage((prev) => Math.max(prev - 1, 1))
+    }
+  }
+
+  useEffect(() => {
+    if (!loadingRepos) {
+      setIsPageLoading(false)
+    }
+  }, [loadingRepos])
+
+  const getText = (key: 'publicRepos' | 'previous' | 'next' | 'loading') => {
     const translations: {
-      [key in 'publicRepos' | 'previous' | 'next']: { en: string; cat: string }
+      [key in 'publicRepos' | 'previous' | 'next' | 'loading']: {
+        en: string
+        cat: string
+      }
     } = {
       publicRepos: {
         en: `${user?.public_repos} public repositories`,
@@ -27,24 +53,9 @@ const UserDetails = () => {
       },
       previous: { en: 'Previous', cat: 'Go backz' },
       next: { en: 'Next', cat: 'Onwardz' },
+      loading: { en: 'Loading...', cat: 'Fetching da re-paws-itories...' },
     }
     return translations[key]?.[language] || ''
-  }
-
-  const avatarStyle: React.CSSProperties = {
-    borderRadius: '4rem',
-    border: 'solid 2px black',
-    margin: 'auto',
-    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-  }
-
-  const repoCardStyle: React.CSSProperties = {
-    cursor: 'pointer',
-    padding: '1rem',
-    backgroundColor: '#fff',
-    marginBottom: '1rem',
-    borderRadius: '.4rem',
-    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
   }
 
   return (
@@ -59,11 +70,14 @@ const UserDetails = () => {
             objectFit='cover'
             placeholder='blur'
             blurDataURL={user.avatar_url}
-            style={avatarStyle}
+            style={{
+              borderRadius: '4rem',
+              border: 'solid 2px black',
+              margin: 'auto',
+              boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+            }}
           />
-          <h2 className={mansalva.className} style={{ paddingBottom: '.5rem' }}>
-            {user.name}
-          </h2>
+          <h2 style={{ paddingBottom: '.5rem' }}>{user.name}</h2>
           <span style={{ display: 'flex', justifyContent: 'center' }}>
             <FontAwesomeIcon icon={faGithub} width={20} />
             <span style={{ marginLeft: '.3rem' }}>{user.login}</span>
@@ -84,7 +98,17 @@ const UserDetails = () => {
       {repos?.length ? (
         <ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
           {repos.map((repo) => (
-            <li key={repo.id} className='custom-bounce' style={repoCardStyle}>
+            <li
+              key={repo.id}
+              className='custom-bounce'
+              style={{
+                cursor: 'pointer',
+                padding: '1rem',
+                backgroundColor: '#fff',
+                marginBottom: '1rem',
+                borderRadius: '.4rem',
+                boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+              }}>
               <Link href={repo.html_url} passHref legacyBehavior>
                 <a
                   target='_blank'
@@ -109,7 +133,7 @@ const UserDetails = () => {
         </ul>
       ) : null}
 
-      {page && (user?.public_repos ?? 0) > 10 && (
+      {page && totalPages > 1 && (
         <div
           style={{
             display: 'flex',
@@ -122,14 +146,17 @@ const UserDetails = () => {
               page === 1 ? '' : 'custom-bounce'
             }`}
             style={{ opacity: page === 1 ? 0.2 : 1 }}
-            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+            onClick={handlePrevPage}
             disabled={page === 1}>
             {getText('previous')}
           </button>
+
           <button
             className='customBrutalButton custom-bounce'
-            onClick={() => setPage((prev) => prev + 1)}>
-            {getText('next')}
+            onClick={handleNextPage}
+            style={{ opacity: page >= totalPages ? 0.2 : 1 }}
+            disabled={isPageLoading || page >= totalPages}>
+            {isPageLoading ? getText('loading') : getText('next')}
           </button>
         </div>
       )}
