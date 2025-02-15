@@ -31,8 +31,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel and [Mansalva], 
-a fun handwriting style font.
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel and [Mansalva](https://fonts.google.com/specimen/Mansalva), a fun handwriting style font.
 
 ## Learn More
 
@@ -52,18 +51,10 @@ a fun handwriting style font.
 ## 🔑 Environment Variables
 
 - To use the GitHub API, create a .env.local file and add: 
-- NEXT_PUBLIC_GITHUB_TOKEN=your_personal_access_token
+```
+NEXT_PUBLIC_GITHUB_TOKEN=your_personal_access_token
+```
 - This ensures authenticated API requests with a higher rate limit.
-
-## 🛠 Development
-- Modify the main page at app/page.tsx – changes auto-refresh in development.
-- The project uses next/font to optimize and load Geist, a modern font from Vercel.
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 ## 💡 Contributing
 👾 Want to improve the project? Feel free to open issues, submit PRs, or suggest new features!
