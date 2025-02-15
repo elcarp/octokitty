@@ -95,16 +95,16 @@ const useGitHubData = (username: string) => {
         setUser(userResponse.data)
         setRepos(reposResponse.data)
       } catch (err: any) {
-        console.error('GitHub API Error:', err) // Debugging
+        console.error('GitHub API Error:', err)
 
         if (err?.response?.status === 404) {
           setError('User not found. Please check the username.')
         } else if (err?.response?.data?.message) {
-          setError(err.response.data.message) // Extracts GitHub's error message
+          setError(err.response.data.message)
         } else if (err?.message) {
-          setError(err.message) // Generic error from `fetch` or network issues
+          setError(err.message)
         } else {
-          setError('Failed to fetch data from GitHub.') // Fallback error message
+          setError('Failed to fetch data from GitHub.')
         }
       } finally {
         setLoadingUser(false)
