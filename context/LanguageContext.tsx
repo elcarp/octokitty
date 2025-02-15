@@ -15,7 +15,7 @@ export const LanguageProvider = ({
 }: {
   children: React.ReactNode
 }) => {
-  const [language, setLanguage] = useState<string>('loading') // Start with "loading"
+  const [language, setLanguage] = useState<string>('loading') 
 
   useEffect(() => {
     const storedLanguage = localStorage.getItem('language') || 'en'
