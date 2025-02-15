@@ -74,7 +74,6 @@ export default function Home() {
                 onClick={handleClick}
                 style={{ width: '18rem', cursor: 'pointer' }}
                 className={`card custom-bounce`}>
-                <p>{user && user.login}</p>
                 <Image
                   src={user.avatar_url}
                   alt={user.login}
@@ -87,6 +86,7 @@ export default function Home() {
                     boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
                   }}
                 />
+                <p>{user && user.login}</p>
                 <button
                   className={`customBrutalButton`}
                   style={{

@@ -5,6 +5,14 @@ import useGitHubRepos from '~hooks/useGitHubRepos'
 import Image from 'next/image'
 import React from 'react'
 import styles from './page.module.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGithub } from '@fortawesome/free-brands-svg-icons'
+import { Mansalva } from 'next/font/google'
+
+const mansalva = Mansalva({
+  subsets: ['latin'],
+  weight: '400',
+})
 
 const UserDetails = () => {
   const language = useLanguage()
@@ -14,19 +22,11 @@ const UserDetails = () => {
   const { user, repos, page, setPage } = useGitHubRepos(username || '')
   const memoizedUser = useMemo(() => user, [user])
   const memoizedRepos = useMemo(() => repos, [repos])
-  console.log(page)
+  console.log(memoizedUser)
   return (
     <div className={`card ${styles.user}`}>
-      <p>
-        {typeof language === 'string'
-          ? 'Username'
-          : language.language === 'en'
-          ? 'Username'
-          : 'Meowsername'}
-        : {memoizedUser?.login}
-      </p>
-      <div style={{ position: 'relative', height: '100px', width: '100px' }}>
-        {memoizedUser && (
+      {memoizedUser && (
+        <>
           <Image
             src={memoizedUser.avatar_url}
             alt={memoizedUser.login}
@@ -42,16 +42,30 @@ const UserDetails = () => {
               boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
             }}
           />
-        )}
-      </div>
-      <p>
-        {typeof language === 'string'
-          ? 'Repositories'
-          : language.language === 'en'
-          ? 'Repositories'
-          : 'Repawsitories'}
-        : {memoizedUser?.public_repos}
-      </p>
+          <h2 className={mansalva.className} style={{ marginBottom: '.5rem' }}>{memoizedUser?.name}</h2>
+          <span style={{ display: 'flex' }}>
+            <FontAwesomeIcon icon={faGithub} width={20} />
+            <span style={{ display: 'block', marginLeft: '.3rem' }}>
+              {memoizedUser?.login}
+            </span>
+          </span>
+          <span
+            style={{
+              display: 'block',
+              color: '#555',
+              fontSize: '.85rem',
+              marginLeft: '.3rem',
+              marginTop: '.2rem',
+            }}>
+            {typeof language === 'string'
+              ? `${memoizedUser?.public_repos} public repositories`
+              : language.language === 'en'
+              ? `${memoizedUser?.public_repos} public repositories`
+              : `${memoizedUser?.public_repos} public repawsitories`}
+          </span>
+        </>
+      )}
+
       <ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
         {memoizedRepos && memoizedRepos.length > 0
           ? memoizedRepos.map((repo) => (
@@ -69,13 +83,16 @@ const UserDetails = () => {
             gap: '10px',
           }}>
           <button
-            className={`customBrutalButton`}
+            className={`customBrutalButton ${
+              page === 1 ? '' : 'custom-bounce'
+            }`}
+            style={{ opacity: page === 1 ? 0.2 : 1 }}
             onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
             disabled={page === 1}>
             Previous
           </button>
           <button
-            className={`customBrutalButton`}
+            className={`customBrutalButton custom-bounce`}
             onClick={() => setPage((prev) => prev + 1)}>
             Next
           </button>
