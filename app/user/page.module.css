@@ -7,7 +7,7 @@
   padding-bottom: 4rem;
 }
 .page h1 {
-  font-size:3rem;
+  font-size: 3rem;
   color: #333;
 }
 
@@ -25,5 +25,19 @@
   to {
     opacity: 1;
     transform: translatey(-12%);
+  }
+}
+
+.user {
+  width: 50vw;
+}
+
+@media (max-width: 768px) {
+  .user {
+    width: 80vw;
+  }
+  .page h1 {
+    font-size: 2rem;
+    line-height: 2.8rem;
   }
 }

@@ -70,7 +70,10 @@ export default function Home() {
           {error && <p>{error}</p>}
           <div style={{ textAlign: 'center' }}>
             {user && (
-              <div onClick={handleClick} className={styles.card}>
+              <div
+                onClick={handleClick}
+                style={{ width: '18rem', cursor: 'pointer' }}
+                className={`card custom-bounce`}>
                 <p>{user && user.login}</p>
                 <Image
                   src={user.avatar_url}
@@ -85,12 +88,12 @@ export default function Home() {
                   }}
                 />
                 <button
-                className={styles.customBrutalButton}
+                  className={`customBrutalButton`}
                   style={{
                     display: 'block',
                     margin: 'auto',
                     marginTop: '1rem',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
                   }}
                   onClick={handleClick}>
                   {language == 'en'

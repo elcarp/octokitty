@@ -23,3 +23,38 @@ nav {
     background-position: 0% 50%;
   }
 }
+
+.customBrutalButton {
+  cursor: pointer;
+  font-family: 'mansalva', cursive; /* font-mansalva */
+  padding: 0.125rem 2rem; /* px-8 py-0.5 */
+  border: 2px solid black; /* border-2 border-black */
+  background-color: white; /* bg-white */
+  color: black; /* text-black */
+  text-transform: uppercase; /* uppercase */
+  font-size: 0.875rem; /* text-sm */
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out; /* transition duration-200 */
+  box-shadow: 1px 1px rgba(0, 0, 0), 2px 2px rgba(0, 0, 0),
+    3px 3px rgba(0, 0, 0), 4px 4px rgba(0, 0, 0), 5px 5px 0px 0px rgba(0, 0, 0); /* Brutalist box shadow */
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.custom-bounce:hover {
+  animation: bounce 0.5s ease-in-out;
+}
+
+.card {
+  background: #ccc;
+  padding: .2rem 1rem 2rem 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 3rem auto;
+}

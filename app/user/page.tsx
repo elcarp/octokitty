@@ -25,10 +25,9 @@ export default function User() {
 
   return (
     <>
-      <div className={styles.page}>
+      <div className={`${styles.page}`}>
         <div
           style={{
-            width: '50%',
             margin: 'auto',
             display: 'flex',
             alignItems: 'top',

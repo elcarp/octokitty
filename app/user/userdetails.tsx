@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 import useGitHubRepos from '~hooks/useGitHubRepos'
 import Image from 'next/image'
 import React from 'react'
+import styles from './page.module.css'
 
 const UserDetails = () => {
   const language = useLanguage()
@@ -15,7 +16,7 @@ const UserDetails = () => {
   const memoizedRepos = useMemo(() => repos, [repos])
   console.log(page)
   return (
-    <>
+    <div className={`card ${styles.user}`}>
       <p>
         {typeof language === 'string'
           ? 'Username'
@@ -68,14 +69,19 @@ const UserDetails = () => {
             gap: '10px',
           }}>
           <button
+            className={`customBrutalButton`}
             onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
             disabled={page === 1}>
             Previous
           </button>
-          <button onClick={() => setPage((prev) => prev + 1)}>Next</button>
+          <button
+            className={`customBrutalButton`}
+            onClick={() => setPage((prev) => prev + 1)}>
+            Next
+          </button>
         </div>
       )}
-    </>
+    </div>
   )
 }
 
