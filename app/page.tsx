@@ -19,14 +19,22 @@ export default function Home() {
   const [username, setUsername] = React.useState('')
   const debouncedUsername = useDebounce(username, 500)
   const { loading, error, user } = useGitHubRepos(debouncedUsername)
+
   const { language } = useLanguage()
   const router = useRouter()
 
-  const handleClick = () => {
-    if (debouncedUsername.length > 0) {
+  const handleClick = React.useCallback(() => {
+    if (debouncedUsername.trim().length > 0) {
       router.push(`/user?username=${debouncedUsername}`)
     }
-  }
+  }, [debouncedUsername, router])
+
+  const handleInputChange = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setUsername(e.target.value)
+    },
+    []
+  )
   return (
     <>
       <div className={styles.page}>
@@ -46,14 +54,14 @@ export default function Home() {
             src={octocat}
             width={350}
             height={350}
-            alt='octokitty'
+            alt='GitHub Octocat Logo'
           />
           <div>
             <input
               className={`${styles.slideUp} ${styles.customInput}`}
               type='text'
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={handleInputChange}
               placeholder={
                 language == 'en'
                   ? 'Please enter a Github username'
@@ -76,15 +84,17 @@ export default function Home() {
                 style={{ width: '18rem', cursor: 'pointer' }}
                 className={`card custom-bounce`}>
                 <Image
-                  src={user.avatar_url}
-                  alt={user.login}
+                  src={user?.avatar_url}
+                  alt={user?.login}
                   width={100}
                   height={100}
+                  priority
                   style={{
-                    borderRadius: '4rem',
-                    border: 'solid 2px black',
+                    borderRadius: '50%',
+                    border: '2px solid black',
                     margin: 'auto',
                     boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+                    objectFit: 'cover',
                   }}
                 />
                 <p>{user && user.login}</p>
