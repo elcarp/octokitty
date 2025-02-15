@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import { Octokit } from '@octokit/rest'
 import useDebounce from '~hooks/useDebounce'
 
@@ -25,42 +25,6 @@ interface User {
   public_repos: number
   followers: number
   following: number
-}
-
-const LanguageContext = createContext<
-  { language: string; setLanguage: (lang: string) => void } | undefined
->(undefined)
-
-export const LanguageProvider = ({
-  children,
-}: {
-  children: React.ReactNode
-}) => {
-  const [language, setLanguage] = useState<string>(
-    () =>
-      (typeof window !== 'undefined' && localStorage.getItem('language')) ||
-      'en'
-  )
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('language', language)
-    }
-  }, [language])
-
-  return (
-    <LanguageContext.Provider value={{ language, setLanguage }}>
-      {children}
-    </LanguageContext.Provider>
-  )
-}
-
-export const useLanguage = () => {
-  const context = useContext(LanguageContext)
-  if (!context) {
-    throw new Error('useLanguage must be used within a LanguageProvider')
-  }
-  return context
 }
 
 const useGitHubData = (username: string) => {
