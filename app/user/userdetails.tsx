@@ -113,7 +113,13 @@ const UserDetails = () => {
                 <a
                   target='_blank'
                   rel='noopener noreferrer'
-                  style={{ textDecoration: 'none', color: 'inherit' }}>
+                  style={{
+                    textDecoration: 'none',
+                    color: 'inherit',
+                    display: 'block',
+                    width: '100%',
+                    height: '100%',
+                  }}>
                   <strong>{repo.name}</strong>
                   {repo.description && (
                     <span
