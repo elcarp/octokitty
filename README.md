@@ -1,6 +1,6 @@
 ## GitHub Profile Finder - Next.js Project
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is a Next.js-powered GitHub Profile Finder, allowing users to search for GitHub users and view their public repositories, profile details, and more. Built with Next.js, TypeScript, and the GitHub REST API, this project features debounced search, pagination, and a language switcher with a fun cat-mode 🐈.
 
 ## Getting Started
 
