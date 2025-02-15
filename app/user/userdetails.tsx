@@ -77,13 +77,12 @@ const UserDetails = () => {
           ? memoizedRepos.map((repo) => (
               <Link href={repo.html_url} key={repo.id} passHref legacyBehavior>
                 <a
-                  target='_blank' /* ✅ Opens in a new tab */
-                  rel='noopener noreferrer' /* ✅ Improves security for external links */
+                  target='_blank'
+                  rel='noopener noreferrer'
                   style={{
                     textDecoration: 'none',
                     color: 'inherit',
-                  }} /* ✅ Removes underline */
-                >
+                  }}>
                   <li
                     className='custom-bounce'
                     style={{
@@ -95,7 +94,15 @@ const UserDetails = () => {
                       boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
                     }}>
                     <strong>{repo.name}</strong>{' '}
-                    <span style={{color: '#555', display: 'block', fontSize: '.85rem', marginTop: '.2rem'}}>{repo.description && `${repo.description}`}</span>
+                    <span
+                      style={{
+                        color: '#555',
+                        display: 'block',
+                        fontSize: '.85rem',
+                        marginTop: '.2rem',
+                      }}>
+                      {repo.description && `${repo.description}`}
+                    </span>
                   </li>
                 </a>
               </Link>
@@ -117,12 +124,12 @@ const UserDetails = () => {
             style={{ opacity: page === 1 ? 0.2 : 1 }}
             onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
             disabled={page === 1}>
-            Previous
+            {language.language === 'en' ? 'Previous' : 'Go backz'}
           </button>
           <button
             className={`customBrutalButton custom-bounce`}
             onClick={() => setPage((prev) => prev + 1)}>
-            Next
+            {language.language === 'en' ? 'Next' : 'Onwardz'}
           </button>
         </div>
       )}
