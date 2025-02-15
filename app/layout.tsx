@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import { LanguageProvider } from '~context/LanguageContext'
 import LanguageSwitcher from '~components/languageSwitcher'
+import Head from 'next/head'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -21,10 +22,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
+      <Head>
+        <title>GitHub Profile Finder | Octokitty</title>
+        <meta
+          name='description'
+          content='Find GitHub users and explore their repositories'
+        />
+      </Head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <LanguageProvider>
           <LanguageSwitcher />
-          <main>{children}</main> 
+          <main>{children}</main>
         </LanguageProvider>
       </body>
     </html>
