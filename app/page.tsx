@@ -62,7 +62,7 @@ export default function Home() {
             />
           </div>
           {loading && (
-            <p>
+            <p className={mansalva.className} style={{ paddingTop: '1rem' }}>
               {language == 'en'
                 ? 'Loading...'
                 : 'Spinning… spinning… send treatz to speed up!'}

@@ -8,6 +8,7 @@ import styles from './page.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import { Mansalva } from 'next/font/google'
+import Link from 'next/link'
 
 const mansalva = Mansalva({
   subsets: ['latin'],
@@ -22,7 +23,7 @@ const UserDetails = () => {
   const { user, repos, page, setPage } = useGitHubRepos(username || '')
   const memoizedUser = useMemo(() => user, [user])
   const memoizedRepos = useMemo(() => repos, [repos])
-  console.log(memoizedUser)
+  console.log(memoizedRepos)
   return (
     <div className={`card ${styles.user}`}>
       <div style={{ height: '16rem' }}>
@@ -74,9 +75,30 @@ const UserDetails = () => {
       <ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
         {memoizedRepos && memoizedRepos.length > 0
           ? memoizedRepos.map((repo) => (
-              <li key={repo.id}>
-                {repo.name} {repo.description && `- ${repo.description}`}
-              </li>
+              <Link href={repo.html_url} key={repo.id} passHref legacyBehavior>
+                <a
+                  target='_blank' /* ✅ Opens in a new tab */
+                  rel='noopener noreferrer' /* ✅ Improves security for external links */
+                  style={{
+                    textDecoration: 'none',
+                    color: 'inherit',
+                  }} /* ✅ Removes underline */
+                >
+                  <li
+                    className='custom-bounce'
+                    style={{
+                      cursor: 'pointer',
+                      padding: '1rem',
+                      backgroundColor: '#fff',
+                      marginBottom: '1rem',
+                      borderRadius: '.4rem',
+                      boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+                    }}>
+                    <strong>{repo.name}</strong>{' '}
+                    <span style={{color: '#555', display: 'block', fontSize: '.85rem', marginTop: '.2rem'}}>{repo.description && `${repo.description}`}</span>
+                  </li>
+                </a>
+              </Link>
             ))
           : ''}
       </ul>
@@ -85,7 +107,8 @@ const UserDetails = () => {
           style={{
             display: 'flex',
             justifyContent: 'center',
-            gap: '10px',
+            gap: '1rem',
+            marginTop: '2rem',
           }}>
           <button
             className={`customBrutalButton ${
