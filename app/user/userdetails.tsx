@@ -61,7 +61,7 @@ const UserDetails = () => {
   return (
     <div className={`card ${styles.user}`}>
       {user && (
-        <div style={{ height: '16rem' }}>
+        <>
           <Image
             src={user.avatar_url}
             alt={user.login}
@@ -92,7 +92,7 @@ const UserDetails = () => {
             }}>
             {getText('publicRepos')}
           </span>
-        </div>
+        </>
       )}
 
       {repos?.length ? (
