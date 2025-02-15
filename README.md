@@ -36,12 +36,9 @@ a fun handwriting style font.
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
-
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [Octokit REST API](https://octokit.github.io/rest.js/) - GitHub REST API client for JavaScript/TypeScript
 
 ## 🔍 Features  
 
@@ -52,8 +49,22 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 - ✅ **Pagination** – Browse through repositories with Next/Previous buttons.  
 - ✅ **Language Switcher** – Switch between English 🇬🇧 and a fun cat-themed mode 🐈.  
 
+## 🔑 Environment Variables
+
+- To use the GitHub API, create a .env.local file and add: 
+- NEXT_PUBLIC_GITHUB_TOKEN=your_personal_access_token
+- This ensures authenticated API requests with a higher rate limit.
+
+## 🛠 Development
+- Modify the main page at app/page.tsx – changes auto-refresh in development.
+- The project uses next/font to optimize and load Geist, a modern font from Vercel.
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Check out [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## 💡 Contributing
+👾 Want to improve the project? Feel free to open issues, submit PRs, or suggest new features!
+🔗 Happy coding! 🚀🐙🐈
