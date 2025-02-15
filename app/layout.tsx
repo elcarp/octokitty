@@ -4,6 +4,7 @@ import './globals.css'
 import { LanguageProvider } from '~context/LanguageContext'
 import LanguageSwitcher from '~components/languageSwitcher'
 
+// ✅ Correct way to add fonts in Next.js
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
@@ -14,19 +15,18 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 })
 
+// ✅ Next.js App Router handles <html> and <body>, so do NOT include them here
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
     <LanguageProvider>
-      <html>
-        <body className={`${geistSans.variable} ${geistMono.variable}`}>
-          <LanguageSwitcher />
-          {children}
-        </body>
-      </html>
+      <div className={`${geistSans.variable} ${geistMono.variable}`}>
+        <LanguageSwitcher />
+        {children}
+      </div>
     </LanguageProvider>
   )
 }
