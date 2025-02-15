@@ -43,12 +43,11 @@ export default function User() {
         <div>
           <span
             style={{ cursor: 'pointer', fontSize: '3rem' }}
-            className={mansalva.className}
+            className={`${mansalva.className} custom-bounce`}
             onClick={() => router.push('/')}>
             &larr; {getText('goBack')}
           </span>
 
-          {/* Show message if no username is provided */}
           {!username ? (
             <p
               className={mansalva.className}
