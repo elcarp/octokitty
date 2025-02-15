@@ -139,6 +139,12 @@ const UserDetails = () => {
         </ul>
       ) : null}
 
+      {isPageLoading && (
+        <div className={styles.loaderContainer}>
+          <span className={styles.loader}></span>
+        </div>
+      )}
+
       {page && totalPages > 1 && (
         <div
           style={{
@@ -148,9 +154,7 @@ const UserDetails = () => {
             marginTop: '2rem',
           }}>
           <button
-            className={`customBrutalButton ${
-              page === 1 ? '' : 'custom-bounce'
-            }`}
+            className={`customBrutalButton`}
             style={{ opacity: page === 1 ? 0.2 : 1 }}
             onClick={handlePrevPage}
             disabled={page === 1}>
@@ -158,11 +162,11 @@ const UserDetails = () => {
           </button>
 
           <button
-            className='customBrutalButton custom-bounce'
+            className='customBrutalButton'
             onClick={handleNextPage}
             style={{ opacity: page >= totalPages ? 0.2 : 1 }}
             disabled={isPageLoading || page >= totalPages}>
-            {isPageLoading ? getText('loading') : getText('next')}
+            {getText('next')}
           </button>
         </div>
       )}
