@@ -1,15 +1,10 @@
-import {
-  useState,
-  useEffect,
-  useCallback,
-  createContext,
-  useContext,
-} from 'react'
+import { useState, useEffect, createContext, useContext } from 'react'
 import { Octokit } from '@octokit/rest'
+import useDebounce from '~hooks/useDebounce'
 
 const octokit = new Octokit({
-  auth: process.env.NEXT_PUBLIC_GITHUB_TOKEN, // Use token for authentication
-  log: { debug: () => {}, info: () => {}, warn: console.warn, error: () => {} }, // Suppress Octokit request logs for 404 errors
+  auth: process.env.NEXT_PUBLIC_GITHUB_TOKEN,
+  log: { debug: () => {}, info: () => {}, warn: console.warn, error: () => {} },
 })
 
 interface Repo {
@@ -41,12 +36,11 @@ export const LanguageProvider = ({
 }: {
   children: React.ReactNode
 }) => {
-  const [language, setLanguage] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('language') || 'en'
-    }
-    return 'en'
-  })
+  const [language, setLanguage] = useState<string>(
+    () =>
+      (typeof window !== 'undefined' && localStorage.getItem('language')) ||
+      'en'
+  )
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -72,66 +66,51 @@ export const useLanguage = () => {
 const useGitHubData = (username: string) => {
   const [repos, setRepos] = useState<Repo[]>([])
   const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loadingUser, setLoadingUser] = useState<boolean>(false)
+  const [loadingRepos, setLoadingRepos] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
   const [page, setPage] = useState(1)
 
-  const fetchRepos = useCallback(async () => {
-    if (!username || username.trim() === '') return
+  const debouncedUsername = useDebounce(username, 500)
 
-    setLoading(true)
-    setError(null)
+  useEffect(() => {
+    if (!debouncedUsername) return
 
-    try {
-      const response = await octokit.rest.repos.listForUser({
-        username,
-        per_page: 5, // Fetch 10 repositories per page
-        page,
-        sort: 'updated',
-      })
+    const fetchGitHubData = async () => {
+      setLoadingUser(true)
+      setLoadingRepos(true)
+      setError(null)
 
-      setRepos(response.data)
-    } catch (err: any) {
-      if (err.status === 404) {
-        setError('User not found. Please check the username.')
-        console.warn(`GitHub user "${username}" not found. (404)`)
-      } else {
-        setError(err.message || 'Failed to fetch repositories.')
-      }
-    } finally {
-      setLoading(false)
-    }
-  }, [username, page])
-
-  const fetchUserInfo = useCallback(async () => {
-    if (!username || username.trim() === '') return
-
-    setLoading(true)
-    setError(null)
-
-    setTimeout(async () => {
       try {
-        const response = await octokit.rest.users.getByUsername({ username })
-        setUser(response.data)
+        const [userResponse, reposResponse] = await Promise.all([
+          octokit.rest.users.getByUsername({ username: debouncedUsername }),
+          octokit.rest.repos.listForUser({
+            username: debouncedUsername,
+            per_page: 5,
+            page,
+            sort: 'updated',
+          }),
+        ])
+
+        setUser(userResponse.data)
+        setRepos(reposResponse.data)
       } catch (err: any) {
         if (err.status === 404) {
           setError('User not found. Please check the username.')
-          console.warn(`GitHub user "${username}" not found. (404)`)
+          console.warn(`GitHub user "${debouncedUsername}" not found. (404)`)
         } else {
-          setError(err.message || 'Failed to fetch user information.')
+          setError(err.message || 'Failed to fetch data from GitHub.')
         }
       } finally {
-        setLoading(false)
+        setLoadingUser(false)
+        setLoadingRepos(false)
       }
-    }, 500) // Adding a 500ms delay before API call
-  }, [username])
+    }
 
-  useEffect(() => {
-    fetchRepos()
-    fetchUserInfo()
-  }, [fetchRepos, fetchUserInfo])
+    fetchGitHubData()
+  }, [debouncedUsername, page])
 
-  return { repos, user, loading, error, page, setPage }
+  return { repos, user, loadingUser, loadingRepos, error, page, setPage }
 }
 
 export default useGitHubData

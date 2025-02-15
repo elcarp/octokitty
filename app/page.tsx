@@ -18,7 +18,8 @@ const mansalva = Mansalva({
 export default function Home() {
   const [username, setUsername] = React.useState('')
   const debouncedUsername = useDebounce(username, 500)
-  const { loading, error, user } = useGitHubRepos(debouncedUsername)
+  const { loadingUser, loadingRepos, error, user } =
+    useGitHubRepos(debouncedUsername)
 
   const { language } = useLanguage()
   const router = useRouter()
@@ -29,7 +30,7 @@ export default function Home() {
       router.push(`/user?username=${debouncedUsername}`)
     }
   }, [debouncedUsername, router])
-  
+
   const handleInputFocus = React.useCallback(() => {
     inputRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [])
@@ -70,7 +71,7 @@ export default function Home() {
               }
             />
           </div>
-          {loading && (
+          {(loadingUser || loadingRepos) && (
             <p className={mansalva.className} style={{ paddingTop: '1rem' }}>
               {language == 'en'
                 ? 'Loading...'
