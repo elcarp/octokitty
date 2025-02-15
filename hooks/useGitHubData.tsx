@@ -74,7 +74,7 @@ const useGitHubData = (username: string) => {
   const debouncedUsername = useDebounce(username, 500)
 
   useEffect(() => {
-    if (!debouncedUsername) return
+    if (!debouncedUsername || debouncedUsername.trim() === '') return
 
     const fetchGitHubData = async () => {
       setLoadingUser(true)
@@ -95,11 +95,16 @@ const useGitHubData = (username: string) => {
         setUser(userResponse.data)
         setRepos(reposResponse.data)
       } catch (err: any) {
-        if (err.status === 404) {
+        console.error('GitHub API Error:', err) // Debugging
+
+        if (err?.response?.status === 404) {
           setError('User not found. Please check the username.')
-          console.warn(`GitHub user "${debouncedUsername}" not found. (404)`)
+        } else if (err?.response?.data?.message) {
+          setError(err.response.data.message) // Extracts GitHub's error message
+        } else if (err?.message) {
+          setError(err.message) // Generic error from `fetch` or network issues
         } else {
-          setError(err.message || 'Failed to fetch data from GitHub.')
+          setError('Failed to fetch data from GitHub.') // Fallback error message
         }
       } finally {
         setLoadingUser(false)

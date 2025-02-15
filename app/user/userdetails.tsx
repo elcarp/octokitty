@@ -1,6 +1,6 @@
 import { useSearchParams } from 'next/navigation'
 import { useLanguage } from '~context/LanguageContext'
-import useGitHubRepos from '~hooks/useGitHubRepos'
+import useGitHubData from '~hooks/useGitHubData'
 import Image from 'next/image'
 import React from 'react'
 import styles from './page.module.css'
@@ -15,7 +15,7 @@ const UserDetails = () => {
   const { language } = useLanguage() as { language: 'en' | 'cat' }
   const searchParams = useSearchParams()
   const username = searchParams.get('username')
-  const { user, repos, page, setPage } = useGitHubRepos(username || '')
+  const { user, repos, page, setPage } = useGitHubData(username || '')
 
   const getText = (key: 'publicRepos' | 'previous' | 'next') => {
     const translations: {
