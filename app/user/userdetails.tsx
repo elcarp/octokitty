@@ -1,6 +1,5 @@
 import { useSearchParams } from 'next/navigation'
 import { useLanguage } from '~context/LanguageContext'
-import { useMemo } from 'react'
 import useGitHubRepos from '~hooks/useGitHubRepos'
 import Image from 'next/image'
 import React from 'react'
@@ -10,90 +9,89 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import { Mansalva } from 'next/font/google'
 import Link from 'next/link'
 
-const mansalva = Mansalva({
-  subsets: ['latin'],
-  weight: '400',
-})
+const mansalva = Mansalva({ subsets: ['latin'], weight: '400' })
 
 const UserDetails = () => {
-  const language = useLanguage()
-
+  const { language } = useLanguage() as { language: 'en' | 'cat' }
   const searchParams = useSearchParams()
   const username = searchParams.get('username')
   const { user, repos, page, setPage } = useGitHubRepos(username || '')
-  const memoizedUser = useMemo(() => user, [user])
-  const memoizedRepos = useMemo(() => repos, [repos])
-  console.log(memoizedRepos)
+
+  const getText = (key: 'publicRepos' | 'previous' | 'next') => {
+    const translations: {
+      [key in 'publicRepos' | 'previous' | 'next']: { en: string; cat: string }
+    } = {
+      publicRepos: {
+        en: `${user?.public_repos} public repositories`,
+        cat: `${user?.public_repos} public repawsitories`,
+      },
+      previous: { en: 'Previous', cat: 'Go backz' },
+      next: { en: 'Next', cat: 'Onwardz' },
+    }
+    return translations[key]?.[language] || ''
+  }
+
+  const avatarStyle: React.CSSProperties = {
+    borderRadius: '4rem',
+    border: 'solid 2px black',
+    margin: 'auto',
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+  }
+
+  const repoCardStyle: React.CSSProperties = {
+    cursor: 'pointer',
+    padding: '1rem',
+    backgroundColor: '#fff',
+    marginBottom: '1rem',
+    borderRadius: '.4rem',
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+  }
+
   return (
     <div className={`card ${styles.user}`}>
-      <div style={{ height: '16rem' }}>
-        {memoizedUser && (
-          <>
-            <Image
-              src={memoizedUser.avatar_url}
-              alt={memoizedUser.login}
-              width={100}
-              height={100}
-              objectFit='cover'
-              placeholder='blur'
-              blurDataURL={memoizedUser.avatar_url}
-              style={{
-                borderRadius: '4rem',
-                border: 'solid 2px black',
-                margin: 'auto',
-                boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-              }}
-            />
-            <h2
-              className={mansalva.className}
-              style={{ paddingBottom: '.5rem' }}>
-              {memoizedUser?.name}
-            </h2>
-            <span style={{ display: 'flex' }}>
-              <FontAwesomeIcon icon={faGithub} width={20} />
-              <span style={{ display: 'block', marginLeft: '.3rem' }}>
-                {memoizedUser?.login}
-              </span>
-            </span>
-            <span
-              style={{
-                display: 'block',
-                color: '#555',
-                fontSize: '.85rem',
-                marginLeft: '.3rem',
-                paddingTop: '.2rem',
-              }}>
-              {typeof language === 'string'
-                ? `${memoizedUser?.public_repos} public repositories`
-                : language.language === 'en'
-                ? `${memoizedUser?.public_repos} public repositories`
-                : `${memoizedUser?.public_repos} public repawsitories`}
-            </span>
-          </>
-        )}
-      </div>
-      <ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
-        {memoizedRepos && memoizedRepos.length > 0
-          ? memoizedRepos.map((repo) => (
-              <Link href={repo.html_url} key={repo.id} passHref legacyBehavior>
+      {user && (
+        <div style={{ height: '16rem' }}>
+          <Image
+            src={user.avatar_url}
+            alt={user.login}
+            width={100}
+            height={100}
+            objectFit='cover'
+            placeholder='blur'
+            blurDataURL={user.avatar_url}
+            style={avatarStyle}
+          />
+          <h2 className={mansalva.className} style={{ paddingBottom: '.5rem' }}>
+            {user.name}
+          </h2>
+          <span style={{ display: 'flex' }}>
+            <FontAwesomeIcon icon={faGithub} width={20} />
+            <span style={{ marginLeft: '.3rem' }}>{user.login}</span>
+          </span>
+          <span
+            style={{
+              display: 'block',
+              color: '#555',
+              fontSize: '.85rem',
+              marginLeft: '.3rem',
+              paddingTop: '.2rem',
+            }}>
+            {getText('publicRepos')}
+          </span>
+        </div>
+      )}
+
+      {repos?.length ? (
+        <ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
+          {repos.map((repo) => (
+            <li key={repo.id} className='custom-bounce' style={repoCardStyle}>
+              <Link href={repo.html_url} passHref legacyBehavior>
                 <a
                   target='_blank'
                   rel='noopener noreferrer'
-                  style={{
-                    textDecoration: 'none',
-                    color: 'inherit',
-                  }}>
-                  <li
-                    className='custom-bounce'
-                    style={{
-                      cursor: 'pointer',
-                      padding: '1rem',
-                      backgroundColor: '#fff',
-                      marginBottom: '1rem',
-                      borderRadius: '.4rem',
-                      boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-                    }}>
-                    <strong>{repo.name}</strong>{' '}
+                  style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <strong>{repo.name}</strong>
+                  {repo.description && (
                     <span
                       style={{
                         color: '#555',
@@ -101,15 +99,17 @@ const UserDetails = () => {
                         fontSize: '.85rem',
                         marginTop: '.2rem',
                       }}>
-                      {repo.description && `${repo.description}`}
+                      {repo.description}
                     </span>
-                  </li>
+                  )}
                 </a>
               </Link>
-            ))
-          : ''}
-      </ul>
-      {page && (memoizedUser?.public_repos ?? 0) > 10 && (
+            </li>
+          ))}
+        </ul>
+      ) : null}
+
+      {page && (user?.public_repos ?? 0) > 10 && (
         <div
           style={{
             display: 'flex',
@@ -124,12 +124,12 @@ const UserDetails = () => {
             style={{ opacity: page === 1 ? 0.2 : 1 }}
             onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
             disabled={page === 1}>
-            {language.language === 'en' ? 'Previous' : 'Go backz'}
+            {getText('previous')}
           </button>
           <button
-            className={`customBrutalButton custom-bounce`}
+            className='customBrutalButton custom-bounce'
             onClick={() => setPage((prev) => prev + 1)}>
-            {language.language === 'en' ? 'Next' : 'Onwardz'}
+            {getText('next')}
           </button>
         </div>
       )}
@@ -137,4 +137,4 @@ const UserDetails = () => {
   )
 }
 
-export default React.memo(UserDetails)
+export default UserDetails
