@@ -100,7 +100,7 @@ const UserDetails = () => {
           {repos.map((repo) => (
             <li
               key={repo.id}
-              className='custom-bounce'
+              className='opacityHover'
               style={{
                 cursor: 'pointer',
                 padding: '1rem',
