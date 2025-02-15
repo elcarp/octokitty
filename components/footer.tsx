@@ -13,7 +13,8 @@ export default function Footer() {
         <div
           className='footer'
           style={{ textAlign: 'center', display: 'flex', alignItems: 'end' }}>
-          Lovingly designed and developed by Lise and dedicated to Annapurna 🐈‍⬛
+          Designed and developed with love by Lise, a heartfelt tribute to
+          Annapurna 🐈‍⬛
         </div>
       </footer>
     </>
