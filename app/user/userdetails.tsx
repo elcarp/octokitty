@@ -78,7 +78,7 @@ const UserDetails = () => {
                 {repo.name} {repo.description && `- ${repo.description}`}
               </li>
             ))
-          : 'loading...'}
+          : ''}
       </ul>
       {page && (memoizedUser?.public_repos ?? 0) > 10 && (
         <div
