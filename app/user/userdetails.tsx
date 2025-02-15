@@ -25,47 +25,52 @@ const UserDetails = () => {
   console.log(memoizedUser)
   return (
     <div className={`card ${styles.user}`}>
-      {memoizedUser && (
-        <>
-          <Image
-            src={memoizedUser.avatar_url}
-            alt={memoizedUser.login}
-            width={100}
-            height={100}
-            objectFit='cover'
-            placeholder='blur'
-            blurDataURL={memoizedUser.avatar_url}
-            style={{
-              borderRadius: '4rem',
-              border: 'solid 2px black',
-              margin: 'auto',
-              boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-            }}
-          />
-          <h2 className={mansalva.className} style={{ marginBottom: '.5rem' }}>{memoizedUser?.name}</h2>
-          <span style={{ display: 'flex' }}>
-            <FontAwesomeIcon icon={faGithub} width={20} />
-            <span style={{ display: 'block', marginLeft: '.3rem' }}>
-              {memoizedUser?.login}
+      <div style={{ height: '16rem' }}>
+        {memoizedUser && (
+          <>
+            <Image
+              src={memoizedUser.avatar_url}
+              alt={memoizedUser.login}
+              width={100}
+              height={100}
+              objectFit='cover'
+              placeholder='blur'
+              blurDataURL={memoizedUser.avatar_url}
+              style={{
+                borderRadius: '4rem',
+                border: 'solid 2px black',
+                margin: 'auto',
+                boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+              }}
+            />
+            <h2
+              className={mansalva.className}
+              style={{ paddingBottom: '.5rem' }}>
+              {memoizedUser?.name}
+            </h2>
+            <span style={{ display: 'flex' }}>
+              <FontAwesomeIcon icon={faGithub} width={20} />
+              <span style={{ display: 'block', marginLeft: '.3rem' }}>
+                {memoizedUser?.login}
+              </span>
             </span>
-          </span>
-          <span
-            style={{
-              display: 'block',
-              color: '#555',
-              fontSize: '.85rem',
-              marginLeft: '.3rem',
-              marginTop: '.2rem',
-            }}>
-            {typeof language === 'string'
-              ? `${memoizedUser?.public_repos} public repositories`
-              : language.language === 'en'
-              ? `${memoizedUser?.public_repos} public repositories`
-              : `${memoizedUser?.public_repos} public repawsitories`}
-          </span>
-        </>
-      )}
-
+            <span
+              style={{
+                display: 'block',
+                color: '#555',
+                fontSize: '.85rem',
+                marginLeft: '.3rem',
+                paddingTop: '.2rem',
+              }}>
+              {typeof language === 'string'
+                ? `${memoizedUser?.public_repos} public repositories`
+                : language.language === 'en'
+                ? `${memoizedUser?.public_repos} public repositories`
+                : `${memoizedUser?.public_repos} public repawsitories`}
+            </span>
+          </>
+        )}
+      </div>
       <ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
         {memoizedRepos && memoizedRepos.length > 0
           ? memoizedRepos.map((repo) => (
@@ -73,7 +78,7 @@ const UserDetails = () => {
                 {repo.name} {repo.description && `- ${repo.description}`}
               </li>
             ))
-          : 'none'}
+          : 'loading...'}
       </ul>
       {page && (memoizedUser?.public_repos ?? 0) > 10 && (
         <div

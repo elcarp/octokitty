@@ -29,6 +29,7 @@ export default function User() {
         <div
           style={{
             margin: 'auto',
+            marginTop: '2rem',
             display: 'flex',
             alignItems: 'top',
             minHeight: '80vh',
