@@ -29,14 +29,7 @@ export default function Home() {
       router.push(`/user?username=${debouncedUsername}`)
     }
   }, [debouncedUsername, router])
-
-  const handleInputChange = React.useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setUsername(e.target.value)
-    },
-    []
-  )
-
+  
   const handleInputFocus = React.useCallback(() => {
     inputRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [])
@@ -69,7 +62,7 @@ export default function Home() {
               type='text'
               value={username}
               onFocus={handleInputFocus}
-              onChange={handleInputChange}
+              onChange={(e) => setUsername(e.target.value)}
               placeholder={
                 language == 'en'
                   ? 'Please enter a Github username'
