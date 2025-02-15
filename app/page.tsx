@@ -71,50 +71,52 @@ export default function Home() {
               }
             />
           </div>
-          {(loadingUser || loadingRepos) && (
-            <p className={mansalva.className} style={{ paddingTop: '1rem' }}>
-              {language == 'en'
-                ? 'Loading...'
-                : 'Spinning… spinning… send treatz to speed up!'}
-            </p>
-          )}
-          {error && <p>{error}</p>}
-          <div style={{ textAlign: 'center' }}>
-            {user && (
-              <div
-                onClick={handleClick}
-                style={{ width: '18rem', cursor: 'pointer' }}
-                className={`card custom-bounce`}>
-                <Image
-                  src={user?.avatar_url}
-                  alt={user?.login}
-                  width={100}
-                  height={100}
-                  priority
-                  style={{
-                    borderRadius: '50%',
-                    border: '2px solid black',
-                    margin: 'auto',
-                    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-                    objectFit: 'cover',
-                  }}
-                />
-                <p>{user && user.login}</p>
-                <button
-                  className={`customBrutalButton`}
-                  style={{
-                    display: 'block',
-                    margin: 'auto',
-                    marginTop: '1rem',
-                    cursor: 'pointer',
-                  }}
-                  onClick={handleClick}>
-                  {language == 'en'
-                    ? 'View Repositories'
-                    : 'See da re-paws-itories?'}
-                </button>
-              </div>
+          <div style={{height: '14rem'}}>
+            {(loadingUser || loadingRepos) && (
+              <p className={mansalva.className} style={{ paddingTop: '1rem' }}>
+                {language == 'en'
+                  ? 'Loading...'
+                  : 'Spinning… spinning… send treatz to speed up!'}
+              </p>
             )}
+            {error && <p>{error}</p>}
+            <div style={{ textAlign: 'center' }}>
+              {user && (
+                <div
+                  onClick={handleClick}
+                  style={{ width: '18rem', cursor: 'pointer' }}
+                  className={`card custom-bounce`}>
+                  <Image
+                    src={user?.avatar_url}
+                    alt={user?.login}
+                    width={100}
+                    height={100}
+                    priority
+                    style={{
+                      borderRadius: '50%',
+                      border: '2px solid black',
+                      margin: 'auto',
+                      boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+                      objectFit: 'cover',
+                    }}
+                  />
+                  <p>{user && user.login}</p>
+                  <button
+                    className={`customBrutalButton`}
+                    style={{
+                      display: 'block',
+                      margin: 'auto',
+                      marginTop: '1rem',
+                      cursor: 'pointer',
+                    }}
+                    onClick={handleClick}>
+                    {language == 'en'
+                      ? 'View Repositories'
+                      : 'See da re-paws-itories?'}
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

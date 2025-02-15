@@ -64,7 +64,6 @@ footer div {
   text-align: center;
   display: flex;
   align-items: end;
-  height: 30vh;
   justify-content: center;
-  padding-bottom: 1rem;
+  padding: 1rem;
 }
