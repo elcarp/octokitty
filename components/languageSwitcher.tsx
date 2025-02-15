@@ -1,60 +1,77 @@
 'use client'
 import { useLanguage } from '~context/LanguageContext'
+import React from 'react'
 
 const LanguageSwitcher = () => {
   const { language, setLanguage } = useLanguage()
-
-  if (language === 'loading') return null // Prevent rendering until language loads
-
   const isEnglish = language === 'en'
 
+  const toggleLanguage = () => setLanguage(isEnglish ? 'cat' : 'en')
+
+  const navStyle: React.CSSProperties = {
+    display: 'flex',
+    justifyContent: 'end',
+    marginRight: '3rem',
+    marginTop: '1rem',
+    fontSize: '1.5rem',
+  }
+
+  const switchContainerStyle: React.CSSProperties = {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+  }
+
+  const switchWrapperStyle: React.CSSProperties = {
+    position: 'relative',
+    display: 'inline-block',
+    width: '50px',
+    height: '25px',
+  }
+
+  const switchInputStyle: React.CSSProperties = {
+    opacity: 0,
+    width: 0,
+    height: 0,
+  }
+
+  const switchTrackStyle: React.CSSProperties = {
+    position: 'absolute',
+    cursor: 'pointer',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: isEnglish ? '#2196F3' : '#ccc',
+    borderRadius: '25px',
+    transition: '0.4s',
+  }
+
+  const switchThumbStyle: React.CSSProperties = {
+    position: 'absolute',
+    height: '18px',
+    width: '18px',
+    borderRadius: '50%',
+    backgroundColor: 'white',
+    left: isEnglish ? '28px' : '4px',
+    top: '3.5px',
+    transition: '0.4s',
+  }
+
   return (
-    <nav
-      style={{
-        display: 'flex',
-        justifyContent: 'end',
-        marginRight: '3rem',
-        marginTop: '1rem',
-        fontSize: '1.5rem',
-      }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+    <nav style={navStyle}>
+      <div style={switchContainerStyle}>
         <span>🐈</span>
-        <label
-          style={{
-            position: 'relative',
-            display: 'inline-block',
-            width: '50px',
-            height: '25px',
-          }}>
+        <label style={switchWrapperStyle}>
           <input
             type='checkbox'
             checked={isEnglish}
-            onChange={() => setLanguage(isEnglish ? 'cat' : 'en')}
-            style={{ opacity: 0, width: 0, height: 0 }}
+            onChange={toggleLanguage}
+            style={switchInputStyle}
+            aria-label='Toggle Language'
           />
-          <span
-            style={{
-              position: 'absolute',
-              cursor: 'pointer',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: isEnglish ? '#2196F3' : '#ccc',
-              borderRadius: '25px',
-              transition: '0.4s',
-            }}>
-            <span
-              style={{
-                position: 'absolute',
-                height: '18px',
-                width: '18px',
-                borderRadius: '50%',
-                backgroundColor: 'white',
-                left: isEnglish ? '28px' : '4px',
-                top: '3.5px',
-                transition: '0.4s',
-              }}></span>
+          <span style={switchTrackStyle}>
+            <span style={switchThumbStyle}></span>
           </span>
         </label>
         <span>🇬🇧</span>
