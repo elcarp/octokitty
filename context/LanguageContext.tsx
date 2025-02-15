@@ -31,7 +31,6 @@ export const LanguageProvider = ({
   return (
     <LanguageContext.Provider value={{ language, setLanguage }}>
       {language !== 'loading' && children}{' '}
-      {/* Prevents rendering until language loads */}
     </LanguageContext.Provider>
   )
 }
