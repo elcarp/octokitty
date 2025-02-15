@@ -58,11 +58,18 @@ nav {
 .custom-bounce:hover {
   animation: bounce 0.5s ease-in-out;
 }
-.opacityHover {
+.backgroundHover {
   transition: all 0.3s ease-in-out;
+  background: #fff;
 }
-.opacityHover:hover {
-  opacity: 0.5;
+ .backgroundHover strong, .backgroundHover span {
+  color: #333;
+}
+.backgroundHover:hover {
+  background: slategray;
+}
+.backgroundHover:hover span, .backgroundHover:hover strong {
+  color: #fff;
 }
 
 .card {

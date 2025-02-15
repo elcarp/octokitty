@@ -100,11 +100,10 @@ const UserDetails = () => {
           {repos.map((repo) => (
             <li
               key={repo.id}
-              className='opacityHover'
+              className='backgroundHover'
               style={{
                 cursor: 'pointer',
                 padding: '1rem',
-                backgroundColor: '#fff',
                 marginBottom: '1rem',
                 borderRadius: '.4rem',
                 boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
@@ -115,7 +114,6 @@ const UserDetails = () => {
                   rel='noopener noreferrer'
                   style={{
                     textDecoration: 'none',
-                    color: 'inherit',
                     display: 'block',
                     width: '100%',
                     height: '100%',
@@ -124,7 +122,6 @@ const UserDetails = () => {
                   {repo.description && (
                     <span
                       style={{
-                        color: '#555',
                         display: 'block',
                         fontSize: '.85rem',
                         marginTop: '.2rem',
