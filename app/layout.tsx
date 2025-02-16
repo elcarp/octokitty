@@ -2,9 +2,9 @@
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import { LanguageProvider } from '~context/language-context'
-import LanguageSwitcher from '~components/language-switcher'
+import LanguageSwitcher from '~components/language-switcher/language-switcher'
 import Head from 'next/head'
-import Footer from '~components/footer'
+import Footer from '~components/footer/footer'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',

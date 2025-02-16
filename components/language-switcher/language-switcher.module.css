@@ -1,0 +1,60 @@
+/* 🌍 Global Container */
+.nav {
+  display: flex;
+  justify-content: end;
+  margin-right: 3rem;
+  margin-top: 1rem;
+  font-size: 1.5rem;
+  z-index: 2;
+}
+
+/* 📌 Switch Container */
+.switchContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 🔘 Switch Wrapper */
+.switchWrapper {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+}
+
+/* 🛑 Hide Checkbox */
+.switchInput {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* 📏 Switch Track (Background) */
+.switchTrack {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--switch-bg, #ccc); /* Default Gray */
+  border-radius: 25px;
+  transition: background-color 0.4s ease;
+}
+
+/* ⚪ Switch Thumb (Toggle Ball) */
+.switchThumb {
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background-color: white;
+  top: 3.5px;
+  transition: 0.4s ease;
+}
+
+/* 🌐 Dynamic State: Blue When English */
+.switchInput:checked + .switchTrack {
+  background-color: #2196f3;
+}
