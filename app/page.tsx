@@ -8,7 +8,6 @@ import useGitHubRepos from '~hooks/useGitHubData'
 import { useRouter } from 'next/navigation'
 import { useLanguage } from '~context/language-context'
 import { Mansalva } from 'next/font/google'
-import useDebounce from '~hooks/useDebounce'
 
 const mansalva = Mansalva({
   subsets: ['latin'],
@@ -17,19 +16,18 @@ const mansalva = Mansalva({
 
 export default function Home() {
   const [username, setUsername] = React.useState('')
-  const debouncedUsername = useDebounce(username, 500)
-  const { loadingUser, loadingRepos, error, user } =
-    useGitHubRepos(debouncedUsername)
+
+  const { loadingUser, loadingRepos, error, user } = useGitHubRepos(username)
 
   const { language } = useLanguage()
   const router = useRouter()
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleClick = React.useCallback(() => {
-    if (debouncedUsername.trim().length > 0) {
-      router.push(`/user?username=${debouncedUsername}`)
+    if (username.trim().length > 0) {
+      router.push(`/user?username=${username}`)
     }
-  }, [debouncedUsername, router])
+  }, [username, router])
 
   const handleInputFocus = React.useCallback(() => {
     inputRef.current?.scrollIntoView({ behavior: 'smooth' })

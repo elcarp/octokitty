@@ -7,31 +7,19 @@ const octokit = new Octokit({
   log: { debug: () => {}, info: () => {}, warn: console.warn, error: () => {} },
 })
 
-interface Repo {
-  id: number
-  name: string
-  html_url: string
-  description: string | null
-  stargazers_count?: number
-  forks_count?: number
-}
-
-interface User {
+type GitHubUser = {
   login: string
   avatar_url: string
   html_url: string
-  name?: string | null
-  bio?: string | null
+  name: string | null
   public_repos: number
-  followers: number
-  following: number
 }
 
 const useGitHubData = (username: string) => {
-  const [repos, setRepos] = useState<Repo[]>([])
-  const [user, setUser] = useState<User | null>(null)
-  const [loadingUser, setLoadingUser] = useState<boolean>(false)
-  const [loadingRepos, setLoadingRepos] = useState<boolean>(false)
+  const [repos, setRepos] = useState<any[]>([])
+  const [user, setUser] = useState<GitHubUser | null>(null)
+  const [loadingUser, setLoadingUser] = useState(false)
+  const [loadingRepos, setLoadingRepos] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [page, setPage] = useState(1)
 
@@ -58,15 +46,11 @@ const useGitHubData = (username: string) => {
 
         setUser(userResponse.data)
         setRepos(reposResponse.data)
-      } catch (err: any) {
+      } catch (err) {
         console.error('GitHub API Error:', err)
 
-        if (err?.response?.status === 404) {
+        if ((err as any)?.response?.status === 404) {
           setError('User not found. Please check the username.')
-        } else if (err?.response?.data?.message) {
-          setError(err.response.data.message)
-        } else if (err?.message) {
-          setError(err.message)
         } else {
           setError('Failed to fetch data from GitHub.')
         }
