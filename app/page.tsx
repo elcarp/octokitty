@@ -81,8 +81,8 @@ export default function Home() {
                     ? 'Loading...'
                     : 'Spinning… spinning… send treatz to speed up!'}
                 </p>
-                <div className={styles.loaderContainer}>
-                  <span className={styles.loader}></span>
+                <div className={`loaderContainer`}>
+                  <span className={`loader`}></span>
                 </div>
               </>
             )}

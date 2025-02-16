@@ -137,8 +137,8 @@ const UserDetails = () => {
       ) : null}
 
       {isPageLoading && (
-        <div className={styles.loaderContainer}>
-          <span className={styles.loader}></span>
+        <div className={`loaderContainer`}>
+          <span className={`loader`}></span>
         </div>
       )}
 
