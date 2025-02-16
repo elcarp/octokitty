@@ -24,7 +24,7 @@ nav {
   }
 }
 
-.customBrutalButton {
+.brutalButton {
   cursor: pointer;
   font-family: 'mansalva', cursive;
   padding: 0.125rem 2rem;
@@ -37,7 +37,7 @@ nav {
   box-shadow: 1px 1px rgba(0, 0, 0), 2px 2px rgba(0, 0, 0),
     3px 3px rgba(0, 0, 0), 4px 4px rgba(0, 0, 0), 5px 5px 0px 0px rgba(0, 0, 0);
 }
-.customBrutalButton:hover {
+.brutalButton:hover {
   background-color: black;
   color: white;
   box-shadow: 1px 1px rgb(113, 113, 113), 2px 2px rgba(113, 113, 113),
@@ -55,20 +55,22 @@ nav {
   }
 }
 
-.custom-bounce:hover {
+.bounce:hover {
   animation: bounce 0.5s ease-in-out;
 }
-.backgroundHover {
+.backgroundChange {
   transition: all 0.3s ease-in-out;
   background: #fff;
 }
- .backgroundHover strong, .backgroundHover span {
+.backgroundChange strong,
+.backgroundChange span {
   color: #333;
 }
-.backgroundHover:hover {
+.backgroundChange:hover {
   background: slategray;
 }
-.backgroundHover:hover span, .backgroundHover:hover strong {
+.backgroundChange:hover span,
+.backgroundChange:hover strong {
   color: #fff;
 }
 

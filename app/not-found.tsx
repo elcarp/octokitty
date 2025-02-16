@@ -35,7 +35,7 @@ export default function NotFoundPage() {
         className={styles.shake}
       />
       <button
-        className={`${styles.button} customBrutalButton`}
+        className={`${styles.button} brutalButton`}
         onClick={() => router.push('/')}>
         {getText('goHome')}
       </button>

@@ -100,7 +100,7 @@ const UserDetails = () => {
           {repos.map((repo) => (
             <li
               key={repo.id}
-              className='backgroundHover'
+              className='backgroundChange'
               style={{
                 cursor: 'pointer',
                 padding: '1rem',
@@ -151,7 +151,7 @@ const UserDetails = () => {
             marginTop: '2rem',
           }}>
           <button
-            className={`customBrutalButton`}
+            className={`brutalButton`}
             style={{ opacity: page === 1 ? 0.2 : 1 }}
             onClick={handlePrevPage}
             disabled={page === 1}>
@@ -159,7 +159,7 @@ const UserDetails = () => {
           </button>
 
           <button
-            className='customBrutalButton'
+            className='brutalButton'
             onClick={handleNextPage}
             style={{ opacity: page >= totalPages ? 0.2 : 1 }}
             disabled={isPageLoading || page >= totalPages}>

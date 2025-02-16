@@ -34,7 +34,7 @@ export default function User() {
         <div>
           <span
             style={{ cursor: 'pointer', fontSize: '3rem' }}
-            className={`${mansalva.className} custom-bounce`}
+            className={`${mansalva.className} bounce`}
             onClick={() => router.push('/')}>
             &larr; {getText('goBack')}
           </span>

@@ -92,7 +92,7 @@ export default function Home() {
                 <div
                   onClick={handleClick}
                   style={{ width: '18rem', cursor: 'pointer' }}
-                  className={`card custom-bounce`}>
+                  className={`card bounce`}>
                   <Image
                     src={user?.avatar_url}
                     alt={user?.login}
@@ -109,7 +109,7 @@ export default function Home() {
                   />
                   <p>{user && user.login}</p>
                   <button
-                    className={`customBrutalButton`}
+                    className={`brutalButton`}
                     style={{
                       display: 'block',
                       margin: 'auto',
