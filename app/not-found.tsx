@@ -1,7 +1,7 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import styles from './not-found.module.css'
-import { useLanguage } from '~context/LanguageContext'
+import { useLanguage } from '~context/language-context'
 import Image from 'next/image'
 import octocat from '~public/images/octocat-nobg.png' // Adjust based on your assets
 import { Mansalva } from 'next/font/google'

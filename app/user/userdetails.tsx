@@ -1,5 +1,5 @@
 import { useSearchParams } from 'next/navigation'
-import { useLanguage } from '~context/LanguageContext'
+import { useLanguage } from '~context/language-context'
 import useGitHubData from '~hooks/useGitHubData'
 import Image from 'next/image'
 import React, { useState, useEffect } from 'react'

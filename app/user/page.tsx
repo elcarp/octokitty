@@ -2,7 +2,7 @@
 import React, { Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import styles from './page.module.css'
-import { useLanguage } from '~context/LanguageContext'
+import { useLanguage } from '~context/language-context'
 import UserDetails from './userdetails'
 import { Mansalva } from 'next/font/google'
 

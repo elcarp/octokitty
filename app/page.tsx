@@ -6,7 +6,7 @@ import octocat from '~public/images/octocat-nobg.png'
 import React, { useRef } from 'react'
 import useGitHubRepos from '~hooks/useGitHubData'
 import { useRouter } from 'next/navigation'
-import { useLanguage } from '~context/LanguageContext'
+import { useLanguage } from '~context/language-context'
 import { Mansalva } from 'next/font/google'
 import useDebounce from '~hooks/useDebounce'
 

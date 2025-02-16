@@ -1,5 +1,5 @@
 'use client'
-import { useLanguage } from '~context/LanguageContext'
+import { useLanguage } from '~context/language-context'
 import React from 'react'
 
 const LanguageSwitcher = () => {
