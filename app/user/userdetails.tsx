@@ -6,7 +6,6 @@ import React, { useState, useEffect } from 'react'
 import styles from './page.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
-import Link from 'next/link'
 
 const UserDetails = () => {
   const { language } = useLanguage() as { language: 'en' | 'cat' }
@@ -101,36 +100,27 @@ const UserDetails = () => {
             <li
               key={repo.id}
               className='backgroundChange'
+              onClick={() =>
+                window.open(repo.html_url, '_blank', 'noopener,noreferrer')
+              }
               style={{
-                cursor: 'pointer',
-                padding: '1rem',
                 marginBottom: '1rem',
                 borderRadius: '.4rem',
                 boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+                cursor: 'pointer',
+                padding: '1rem',
               }}>
-              <Link href={repo.html_url} passHref legacyBehavior>
-                <a
-                  target='_blank'
-                  rel='noopener noreferrer'
+              <strong>{repo.name}</strong>
+              {repo.description && (
+                <span
                   style={{
-                    textDecoration: 'none',
                     display: 'block',
-                    width: '100%',
-                    height: '100%',
+                    fontSize: '.85rem',
+                    marginTop: '.2rem',
                   }}>
-                  <strong>{repo.name}</strong>
-                  {repo.description && (
-                    <span
-                      style={{
-                        display: 'block',
-                        fontSize: '.85rem',
-                        marginTop: '.2rem',
-                      }}>
-                      {repo.description}
-                    </span>
-                  )}
-                </a>
-              </Link>
+                  {repo.description}
+                </span>
+              )}
             </li>
           ))}
         </ul>
