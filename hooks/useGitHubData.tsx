@@ -39,7 +39,7 @@ const useGitHubData = (username: string) => {
           octokit.rest.users.getByUsername({ username: debouncedUsername }),
           octokit.rest.repos.listForUser({
             username: debouncedUsername,
-            per_page: perPage, // ✅ Uses dynamic perPage value
+            per_page: perPage,
             page,
             sort: 'updated',
           }),
