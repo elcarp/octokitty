@@ -52,30 +52,29 @@
 }
 
 .customInput {
-  width: 100%; /* w-full */
-  position: relative; /* relative */
-  font-size: 0.875rem; /* text-sm */
-  font-family: 'Geist Sans', sans-serif; /* font-geist-sans */
+  width: 100%;
+  position: relative;
+  font-size: 0.875rem;
+  font-family: 'Geist Sans', sans-serif;
 }
 
 @media (min-width: 640px) {
-  /* sm: */
   .customInput {
-    font-size: 1rem; /* sm:text-base */
-    padding-left: 2.5rem; /* sm:pl-10 */
+    font-size: 1rem;
+    padding-left: 2.5rem;
   }
 }
 
 .customInput {
-  z-index: 50; /* z-50 */
-  border: none; /* border-none */
-  color: black; /* text-black */
-  height: 100%; /* h-full */
-  border-radius: 9999px; /* rounded-full */
-  padding-left: 1rem; /* pl-4 */
-  padding-right: 5rem; /* pr-20 */
+  z-index: 50;
+  border: none;
+  color: black;
+  height: 100%;
+  border-radius: 9999px;
+  padding-left: 1rem;
+  padding-right: 5rem;
 }
 
 .customInput:focus {
-  outline: none; /* focus:outline-none */
+  outline: none;
 }

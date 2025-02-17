@@ -1,3 +1,4 @@
+/* Global Styles */
 .page {
   font-family: var(--font-geist-sans);
   display: flex;
@@ -5,56 +6,59 @@
   justify-content: center;
   min-height: 100vh;
   padding-bottom: 4rem;
+  text-align: center;
 }
+
 .page h1 {
   font-size: 3rem;
   color: #333;
 }
 
-.container {
-  margin: 'auto';
-  margin-top: '2rem';
-  display: 'flex';
-  align-items: 'top';
-  min-height: '80vh';
-  text-align: 'center';
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .page h1 {
+    font-size: 2rem;
+    line-height: 2.8rem;
+  }
+
+  .user {
+    width: 80vw;
+  }
 }
 
+/* Containers */
+.container {
+  margin: auto;
+  margin-top: 2rem;
+  display: flex;
+  align-items: flex-start;
+  min-height: 80vh;
+}
+
+/* Slide-Up Animation */
 .slideUp {
-  animation: 1.8s slideUp ease;
-  animation-fill-mode: forwards;
+  animation: slideUp 1.8s ease forwards;
 }
 
 @keyframes slideUp {
   from {
     opacity: 0;
-    transform: translatey(40%);
+    transform: translateY(40%);
   }
-
   to {
     opacity: 1;
-    transform: translatey(-12%);
+    transform: translateY(-12%);
   }
 }
 
+/* User Profile Section */
 .user {
   width: 50vw;
-  text-align: center;
-}
-
-@media (max-width: 768px) {
-  .user {
-    width: 80vw;
-  }
-  .page h1 {
-    font-size: 2rem;
-    line-height: 2.8rem;
-  }
 }
 
 .userImage {
   border-radius: 4rem;
-  border: solid 2px black;
+  border: 2px solid black;
   margin: auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -66,31 +70,34 @@
 .userInfo {
   display: flex;
   justify-content: center;
-}
-
-.userLogin {
-  margin-left: 0.3rem;
+  align-items: center;
+  gap: 0.3rem;
 }
 
 .userPublicRepos {
   display: block;
   color: #555;
   font-size: 0.85rem;
-  margin-left: 0.3rem;
-  padding-top: 0.2rem;
+  margin-top: 0.2rem;
 }
 
+/* Repository List */
 .repoList {
-  list-style-type: none;
-  padding-left: 0;
+  list-style: none;
+  padding: 0;
 }
 
 .repoItem {
   margin-bottom: 1rem;
+  padding: 1rem;
   border-radius: 0.4rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  padding: 1rem;
+  transition: background 0.3s ease-in-out;
+}
+
+.repoItem:hover {
+  background: rgba(0, 0, 0, 0.05);
 }
 
 .repoDescription {
@@ -99,6 +106,7 @@
   margin-top: 0.2rem;
 }
 
+/* Pagination */
 .paginationContainer {
   display: flex;
   justify-content: center;
@@ -108,4 +116,5 @@
 
 .disabledButton {
   opacity: 0.2;
+  pointer-events: none;
 }
