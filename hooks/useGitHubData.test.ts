@@ -5,7 +5,6 @@ import { setupServer } from 'msw/node'
 import useGitHubData from './useGitHubData'
 
 const server = setupServer(
-  // Mock user API response
   http.get('https://api.github.com/users/:username', ({ params }) => {
     if (params.username === 'unknownUser') {
       return HttpResponse.json({ message: 'Not Found' }, { status: 404 })
@@ -27,7 +26,6 @@ const server = setupServer(
     })
   }),
 
-  // Mock repositories API response
   http.get('https://api.github.com/users/:username/repos', ({ params }) => {
     if (params.username === 'unknownUser') {
       return HttpResponse.json([], { status: 404 })
@@ -55,7 +53,7 @@ const server = setupServer(
 
 beforeAll(() => server.listen())
 
-afterEach(() => server.restoreHandlers()) // 🛠 Use restoreHandlers() for safety
+afterEach(() => server.restoreHandlers())
 
 afterAll(() => server.close())
 
@@ -63,14 +61,11 @@ describe('useGitHubData hook', () => {
   it('fetches user data successfully', async () => {
     const { result } = renderHook(() => useGitHubData('testUser'))
 
-    // Check initial state
     expect(result.current.loadingUser).toBe(true)
     expect(result.current.user).toBe(null)
 
-    // Wait for API response
     await waitFor(() => expect(result.current.loadingUser).toBe(false))
 
-    // Check final state
     expect(result.current.user?.login).toBe('testUser')
     expect(result.current.error).toBe(null)
   })
@@ -78,14 +73,11 @@ describe('useGitHubData hook', () => {
   it('fetches repository data successfully', async () => {
     const { result } = renderHook(() => useGitHubData('testUser'))
 
-    // Check initial state
     expect(result.current.loadingRepos).toBe(true)
     expect(result.current.repos).toEqual([])
 
-    // Wait for API response
     await waitFor(() => expect(result.current.loadingRepos).toBe(false))
 
-    // Check final state
     expect(result.current.repos).toHaveLength(2)
     expect(result.current.repos[0].name).toBe('repo1')
     expect(result.current.repos[1].name).toBe('repo2')
