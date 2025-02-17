@@ -22,6 +22,7 @@ const useGitHubData = (username: string) => {
   const [loadingRepos, setLoadingRepos] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [page, setPage] = useState(1)
+  const [perPage, setPerPage] = useState(5) 
 
   const debouncedUsername = useDebounce(username, 500)
 
@@ -38,7 +39,7 @@ const useGitHubData = (username: string) => {
           octokit.rest.users.getByUsername({ username: debouncedUsername }),
           octokit.rest.repos.listForUser({
             username: debouncedUsername,
-            per_page: 5,
+            per_page: perPage, // ✅ Uses dynamic perPage value
             page,
             sort: 'updated',
           }),
@@ -61,9 +62,19 @@ const useGitHubData = (username: string) => {
     }
 
     fetchGitHubData()
-  }, [debouncedUsername, page])
+  }, [debouncedUsername, page, perPage]) 
 
-  return { repos, user, loadingUser, loadingRepos, error, page, setPage }
+  return {
+    repos,
+    user,
+    loadingUser,
+    loadingRepos,
+    error,
+    page,
+    perPage, 
+    setPage,
+    setPerPage, 
+  }
 }
 
 export default useGitHubData

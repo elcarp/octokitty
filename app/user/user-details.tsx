@@ -11,11 +11,11 @@ const UserDetails = () => {
   const { language } = useLanguage() as { language: 'en' | 'cat' }
   const searchParams = useSearchParams()
   const username = searchParams.get('username')
-  const { user, repos, page, setPage, loadingRepos } = useGitHubData(
+  const { user, repos, page, setPage, loadingRepos, perPage } = useGitHubData(
     username || ''
   )
 
-  const totalPages = user ? Math.ceil(user.public_repos / 5) : 1
+  const totalPages = user ? Math.ceil(user.public_repos / perPage) : 1
 
   const handleNextPage = () => {
     if (page < totalPages) {
