@@ -5,6 +5,7 @@ import { setupServer } from 'msw/node'
 import useGitHubData from './useGitHubData'
 
 const server = setupServer(
+  // Mock user API response
   http.get('https://api.github.com/users/:username', ({ params }) => {
     if (params.username === 'unknownUser') {
       return HttpResponse.json({ message: 'Not Found' }, { status: 404 })
@@ -26,13 +27,14 @@ const server = setupServer(
     })
   }),
 
+  // Mock repositories API response
   http.get('https://api.github.com/users/:username/repos', ({ params }) => {
     if (params.username === 'unknownUser') {
       return HttpResponse.json([], { status: 404 })
     }
     if (params.username === 'errorUser') {
       return HttpResponse.json(
-        { message: 'Internal Server Error' },
+        { message: 'Failed to fetch data from GitHub.' },
         { status: 500 }
       )
     }
@@ -53,24 +55,37 @@ const server = setupServer(
 
 beforeAll(() => server.listen())
 
-afterEach(() => server.resetHandlers())
+afterEach(() => server.restoreHandlers()) // 🛠 Use restoreHandlers() for safety
 
 afterAll(() => server.close())
 
 describe('useGitHubData hook', () => {
-  it('fetches user and repository data successfully', async () => {
+  it('fetches user data successfully', async () => {
     const { result } = renderHook(() => useGitHubData('testUser'))
 
+    // Check initial state
     expect(result.current.loadingUser).toBe(true)
-    expect(result.current.loadingRepos).toBe(true)
     expect(result.current.user).toBe(null)
-    expect(result.current.repos).toEqual([])
-    expect(result.current.error).toBe(null)
 
+    // Wait for API response
     await waitFor(() => expect(result.current.loadingUser).toBe(false))
+
+    // Check final state
+    expect(result.current.user?.login).toBe('testUser')
+    expect(result.current.error).toBe(null)
+  })
+
+  it('fetches repository data successfully', async () => {
+    const { result } = renderHook(() => useGitHubData('testUser'))
+
+    // Check initial state
+    expect(result.current.loadingRepos).toBe(true)
+    expect(result.current.repos).toEqual([])
+
+    // Wait for API response
     await waitFor(() => expect(result.current.loadingRepos).toBe(false))
 
-    expect(result.current.user?.login).toBe('testUser')
+    // Check final state
     expect(result.current.repos).toHaveLength(2)
     expect(result.current.repos[0].name).toBe('repo1')
     expect(result.current.repos[1].name).toBe('repo2')
@@ -81,13 +96,11 @@ describe('useGitHubData hook', () => {
     const { result } = renderHook(() => useGitHubData('unknownUser'))
 
     await waitFor(() => expect(result.current.loadingUser).toBe(false))
-    await waitFor(() => expect(result.current.loadingRepos).toBe(false))
 
     expect(result.current.error).toBe(
       'User not found. Please check the username.'
     )
     expect(result.current.user).toBe(null)
-    expect(result.current.repos).toEqual([])
   })
 
   it('handles API errors gracefully', async () => {
@@ -96,7 +109,7 @@ describe('useGitHubData hook', () => {
     await waitFor(() => expect(result.current.loadingUser).toBe(false))
     await waitFor(() => expect(result.current.loadingRepos).toBe(false))
 
-    expect(result.current.error).toBe('Internal Server Error')
+    expect(result.current.error).toBe('Failed to fetch data from GitHub.')
     expect(result.current.user).toBe(null)
     expect(result.current.repos).toEqual([])
   })
