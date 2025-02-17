@@ -69,55 +69,31 @@ const UserDetails = () => {
             objectFit='cover'
             placeholder='blur'
             blurDataURL={user.avatar_url}
-            style={{
-              borderRadius: '4rem',
-              border: 'solid 2px black',
-              margin: 'auto',
-              boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-            }}
+            className={styles.userImage}
           />
-          <h2 style={{ paddingBottom: '.5rem' }}>{user.name}</h2>
-          <span style={{ display: 'flex', justifyContent: 'center' }}>
+          <h2 className={styles.userName}>{user.name}</h2>
+          <span className={styles.userInfo}>
             <FontAwesomeIcon icon={faGithub} width={20} />
-            <span style={{ marginLeft: '.3rem' }}>{user.login}</span>
+            <span className={styles.userLogin}>{user.login}</span>
           </span>
-          <span
-            style={{
-              display: 'block',
-              color: '#555',
-              fontSize: '.85rem',
-              marginLeft: '.3rem',
-              paddingTop: '.2rem',
-            }}>
+          <span className={styles.userPublicRepos}>
             {getText('publicRepos')}
           </span>
         </>
       )}
 
       {repos?.length ? (
-        <ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
+        <ul className={styles.repoList}>
           {repos.map((repo) => (
             <li
               key={repo.id}
-              className='backgroundChange'
+              className={`${styles.repoItem} backgroundChange`}
               onClick={() =>
                 window.open(repo.html_url, '_blank', 'noopener,noreferrer')
-              }
-              style={{
-                marginBottom: '1rem',
-                borderRadius: '.4rem',
-                boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-                cursor: 'pointer',
-                padding: '1rem',
-              }}>
+              }>
               <strong>{repo.name}</strong>
               {repo.description && (
-                <span
-                  style={{
-                    display: 'block',
-                    fontSize: '.85rem',
-                    marginTop: '.2rem',
-                  }}>
+                <span className={styles.repoDescription}>
                   {repo.description}
                 </span>
               )}
@@ -133,25 +109,21 @@ const UserDetails = () => {
       )}
 
       {page && totalPages > 1 && (
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '1rem',
-            marginTop: '2rem',
-          }}>
+        <div className={styles.paginationContainer}>
           <button
-            className={`brutalButton`}
-            style={{ opacity: page === 1 ? 0.2 : 1 }}
+            className={`brutalButton ${
+              page === 1 ? styles.disabledButton : ''
+            }`}
             onClick={handlePrevPage}
             disabled={page === 1}>
             {getText('previous')}
           </button>
 
           <button
-            className='brutalButton'
+            className={`brutalButton ${
+              page >= totalPages ? styles.disabledButton : ''
+            }`}
             onClick={handleNextPage}
-            style={{ opacity: page >= totalPages ? 0.2 : 1 }}
             disabled={isPageLoading || page >= totalPages}>
             {getText('next')}
           </button>
