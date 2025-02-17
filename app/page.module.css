@@ -24,6 +24,9 @@
   font-size: 1rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+.textCenter {
+  text-align: center;
+}
 .slideUp {
   animation: 1.8s slideUp ease;
   animation-fill-mode: forwards;
@@ -50,7 +53,6 @@
     line-height: 2.8rem;
   }
 }
-
 .customInput {
   width: 100%;
   position: relative;
@@ -64,7 +66,6 @@
     padding-left: 2.5rem;
   }
 }
-
 .customInput {
   z-index: 50;
   border: none;
@@ -74,7 +75,6 @@
   padding-left: 1rem;
   padding-right: 5rem;
 }
-
 .customInput:focus {
   outline: none;
 }
