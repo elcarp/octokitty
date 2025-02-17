@@ -2,7 +2,7 @@ import { useSearchParams } from 'next/navigation'
 import { useLanguage } from '~context/language-context'
 import useGitHubData from '~hooks/useGitHubData'
 import Image from 'next/image'
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import styles from './page.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
@@ -92,7 +92,6 @@ const UserDetails = () => {
         </ul>
       ) : null}
 
-      {/* ✅ Replace isPageLoading with loadingRepos */}
       {loadingRepos && (
         <div className={`loaderContainer`}>
           <span className={`loader`}></span>
