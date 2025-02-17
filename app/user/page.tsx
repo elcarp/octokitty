@@ -13,7 +13,7 @@ export default function User() {
   const searchParams = useSearchParams()
   const username = searchParams.get('username')
   const { language } = useLanguage()
-  const typedLanguage: 'en' | 'cat' = language as 'en' | 'cat'
+  const typedLanguage = language as 'en' | 'cat'
 
   const getText = (key: 'goBack' | 'noUser') => {
     const translations: {
