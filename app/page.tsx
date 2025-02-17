@@ -93,17 +93,11 @@ export default function Home() {
                   className={`card bounce`}>
                   <Image
                     src={user?.avatar_url}
+                    className='avatar'
                     alt={user?.login}
                     width={100}
                     height={100}
                     priority
-                    style={{
-                      borderRadius: '50%',
-                      border: '2px solid black',
-                      margin: 'auto',
-                      boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-                      objectFit: 'cover',
-                    }}
                   />
                   <p>{user && user.login}</p>
                   <button

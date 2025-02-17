@@ -51,13 +51,6 @@
   width: 50vw;
 }
 
-.userImage {
-  border-radius: 4rem;
-  border: 2px solid black;
-  margin: auto;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
 .userName {
   padding-bottom: 0.5rem;
 }

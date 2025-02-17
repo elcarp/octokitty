@@ -69,7 +69,7 @@ const UserDetails = () => {
             objectFit='cover'
             placeholder='blur'
             blurDataURL={user.avatar_url}
-            className={styles.userImage}
+            className='avatar'
           />
           <h2 className={styles.userName}>{user.name}</h2>
           <span className={styles.userInfo}>
