@@ -18,8 +18,7 @@ export default function Home() {
   const [username, setUsername] = React.useState('')
 
   const { loadingUser, loadingRepos, error, user } = useGitHubRepos(username)
-
-  const { language } = useLanguage()
+  const { language } = useLanguage() as { language: 'en' | 'cat' }
   const router = useRouter()
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -33,22 +32,41 @@ export default function Home() {
     inputRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [])
 
+  const getText = (
+    key: 'greeting' | 'subtext' | 'placeholder' | 'loading' | 'button'
+  ) => {
+    const translations: Record<string, { en: string; cat: string }> = {
+      greeting: { en: 'Hello.', cat: 'Henlo frien.' },
+      subtext: {
+        en: 'Can I fetch a profile for you?',
+        cat: 'Shall I retrievz a purrfile fur u?',
+      },
+      placeholder: {
+        en: 'Please enter a Github username',
+        cat: 'Pawlease typez a GitHub name, frien',
+      },
+      loading: {
+        en: 'Loading...',
+        cat: 'Spinning… spinning… send treatz to speed up!',
+      },
+      button: { en: 'View Repositories', cat: 'See da re-paws-itories?' },
+    }
+    return translations[key][language]
+  }
+
   return (
     <>
       <div className={styles.page}>
-        <div style={{ textAlign: 'center' }}>
+        <div className={styles.textCenter}>
           <h1 className={styles.slideUp}>
-            {language == 'en' ? 'Hello.' : 'Henlo frien.'}
+            {getText('greeting')}
             <span className={mansalva.className} style={{ display: 'block' }}>
-              {language == 'en'
-                ? 'Can I fetch a profile for you?'
-                : 'Shall I retrievz a purrfile fur u?'}
+              {getText('subtext')}
             </span>
           </h1>
           <Image
-            className={styles.slideUp}
+            className={`${styles.slideUp} ${styles.centerImage}`}
             priority
-            style={{ display: 'block', margin: 'auto' }}
             src={octocat}
             width={350}
             height={350}
@@ -62,60 +80,37 @@ export default function Home() {
               value={username}
               onFocus={handleInputFocus}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder={
-                language == 'en'
-                  ? 'Please enter a Github username'
-                  : 'Pawlease typez a GitHub name, frien'
-              }
+              placeholder={getText('placeholder')}
             />
           </div>
-          <div style={{ height: '14rem' }}>
+          <div className={styles.loadingContainer}>
             {(loadingUser || loadingRepos) && (
               <>
-                <p
-                  className={mansalva.className}
-                  style={{ paddingTop: '1rem' }}>
-                  {language == 'en'
-                    ? 'Loading...'
-                    : 'Spinning… spinning… send treatz to speed up!'}
-                </p>
+                <p className={mansalva.className}>{getText('loading')}</p>
                 <div className={`loaderContainer`}>
                   <span className={`loader`}></span>
                 </div>
               </>
             )}
             {error && <p>{error}</p>}
-            <div style={{ textAlign: 'center' }}>
-              {user && (
-                <div
-                  onClick={handleClick}
-                  style={{ width: '18rem', cursor: 'pointer' }}
-                  className={`card bounce`}>
-                  <Image
-                    src={user?.avatar_url}
-                    className='avatar'
-                    alt={user?.login}
-                    width={100}
-                    height={100}
-                    priority
-                  />
-                  <p>{user && user.login}</p>
-                  <button
-                    className={`brutalButton`}
-                    style={{
-                      display: 'block',
-                      margin: 'auto',
-                      marginTop: '1rem',
-                      cursor: 'pointer',
-                    }}
-                    onClick={handleClick}>
-                    {language == 'en'
-                      ? 'View Repositories'
-                      : 'See da re-paws-itories?'}
-                  </button>
-                </div>
-              )}
-            </div>
+            {user && (
+              <div
+                onClick={handleClick}
+                className={`card bounce ${styles.userCard}`}>
+                <Image
+                  src={user?.avatar_url}
+                  className='avatar'
+                  alt={user?.login}
+                  width={100}
+                  height={100}
+                  priority
+                />
+                <p>{user.login}</p>
+                <button className={`brutalButton`} onClick={handleClick}>
+                  {getText('button')}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
