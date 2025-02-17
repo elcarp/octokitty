@@ -68,8 +68,8 @@ export default function Home() {
             className={`${styles.slideUp} ${styles.centerImage}`}
             priority
             src={octocat}
-            width={350}
-            height={350}
+            width={325}
+            height={325}
             alt='GitHub Octocat Logo'
           />
           <div>

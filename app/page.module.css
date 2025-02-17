@@ -27,6 +27,9 @@
 .textCenter {
   text-align: center;
 }
+.userCard {
+  width: 25vw;
+}
 .slideUp {
   animation: 1.8s slideUp ease;
   animation-fill-mode: forwards;
@@ -51,6 +54,9 @@
   .page h1 {
     font-size: 2rem;
     line-height: 2.8rem;
+  }
+  .userCard {
+    width: 70vw;
   }
 }
 .customInput {
