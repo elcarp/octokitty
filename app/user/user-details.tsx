@@ -15,29 +15,19 @@ const UserDetails = () => {
     username || ''
   )
 
-  const [isPageLoading, setIsPageLoading] = useState(false)
-
   const totalPages = user ? Math.ceil(user.public_repos / 5) : 1
 
   const handleNextPage = () => {
     if (page < totalPages) {
-      setIsPageLoading(true)
       setPage((prev) => prev + 1)
     }
   }
 
   const handlePrevPage = () => {
     if (page > 1) {
-      setIsPageLoading(true)
       setPage((prev) => Math.max(prev - 1, 1))
     }
   }
-
-  useEffect(() => {
-    if (!loadingRepos) {
-      setIsPageLoading(false)
-    }
-  }, [loadingRepos])
 
   const getText = (key: 'publicRepos' | 'previous' | 'next' | 'loading') => {
     const translations: {
@@ -102,7 +92,8 @@ const UserDetails = () => {
         </ul>
       ) : null}
 
-      {isPageLoading && (
+      {/* ✅ Replace isPageLoading with loadingRepos */}
+      {loadingRepos && (
         <div className={`loaderContainer`}>
           <span className={`loader`}></span>
         </div>
@@ -124,7 +115,7 @@ const UserDetails = () => {
               page >= totalPages ? styles.disabledButton : ''
             }`}
             onClick={handleNextPage}
-            disabled={isPageLoading || page >= totalPages}>
+            disabled={loadingRepos || page >= totalPages}>
             {getText('next')}
           </button>
         </div>
