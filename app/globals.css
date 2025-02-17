@@ -1,6 +1,3 @@
-/* ==========================
-   🌎 GLOBAL STYLES
-========================== */
 html, body {
   margin: 0;
   padding: 0;
@@ -15,9 +12,6 @@ nav {
   top: 0;
 }
 
-/* ==========================
-   🎨 ANIMATIONS
-========================== */
 @keyframes gradient-animation {
   0% {
     background-position: 0% 50%;
@@ -43,9 +37,6 @@ nav {
   animation: bounce 0.5s ease-in-out;
 }
 
-/* ==========================
-   ⏳ LOADER STYLES
-========================== */
 .loaderContainer {
   display: flex;
   justify-content: center;
@@ -71,9 +62,6 @@ nav {
   }
 }
 
-/* ==========================
-   🔘 BUTTON STYLES
-========================== */
 .brutalButton {
   cursor: pointer;
   font-family: 'Mansalva', cursive;
@@ -103,9 +91,6 @@ nav {
     5px 5px 0px 0px rgba(113, 113, 113);
 }
 
-/* ==========================
-   🖼️ COMPONENT STYLES
-========================== */
 .card {
   background: #ccc;
   padding: 2rem;
@@ -133,9 +118,6 @@ nav {
   color: #fff;
 }
 
-/* ==========================
-   📌 FOOTER STYLES
-========================== */
 footer div {
   text-align: center;
   display: flex;
