@@ -3,7 +3,7 @@ import React, { Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import styles from './page.module.css'
 import { useLanguage } from '~context/language-context'
-import UserDetails from './userdetails'
+import UserDetails from './user-details'
 import { Mansalva } from 'next/font/google'
 
 const mansalva = Mansalva({ subsets: ['latin'], weight: '400' })
