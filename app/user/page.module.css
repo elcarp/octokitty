@@ -75,6 +75,17 @@
   padding: 0;
 }
 
+.noRepos {
+  margin: auto;
+  padding: 2rem;
+  max-width: 80%;
+}
+
+.noRepos button {
+  margin: auto;
+  display: block;
+  margin-top: 1.5rem;
+}
 .repoItem {
   margin-bottom: 1rem;
   padding: 1rem;

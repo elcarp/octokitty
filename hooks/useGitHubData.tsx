@@ -52,6 +52,7 @@ const useGitHubData = (username: string) => {
 
         if ((err as any)?.response?.status === 404) {
           setError('User not found. Please check the username.')
+          setUser(null)
         } else {
           setError('Failed to fetch data from GitHub.')
         }
