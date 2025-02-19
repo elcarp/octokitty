@@ -1,4 +1,4 @@
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useLanguage } from '~context/language-context'
 import useGitHubData from '~hooks/useGitHubData'
 import Image from 'next/image'
@@ -14,6 +14,8 @@ const UserDetails = () => {
   const { user, repos, page, setPage, loadingRepos, perPage } = useGitHubData(
     username || ''
   )
+
+  const router = useRouter()
 
   const totalPages = user ? Math.ceil(user.public_repos / perPage) : 1
 
@@ -97,7 +99,20 @@ const UserDetails = () => {
           <span className={`loader`}></span>
         </div>
       )}
-
+      {user?.public_repos == 0 && (
+        <div className={styles.noRepos}>
+          <span>
+            This user has no public repositories to show. Would you like to go
+            back and search for another user?
+          </span>
+          <button
+            disabled={false}
+            className={`brutalButton`}
+            onClick={() => router.push('/')}>
+            Yes
+          </button>
+        </div>
+      )}
       {page && totalPages > 1 && (
         <div className={styles.paginationContainer}>
           <button
