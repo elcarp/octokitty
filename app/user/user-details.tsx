@@ -32,7 +32,7 @@ const UserDetails = () => {
   }
 
   const getText = (
-    key: 'publicRepos' | 'previous' | 'next' | 'loading' | 'noRepos'
+    key: 'publicRepos' | 'previous' | 'next' | 'loading' | 'noRepos' | 'yes'
   ) => {
     const translations: {
       [key in
