@@ -31,9 +31,17 @@ const UserDetails = () => {
     }
   }
 
-  const getText = (key: 'publicRepos' | 'previous' | 'next' | 'loading') => {
+  const getText = (
+    key: 'publicRepos' | 'previous' | 'next' | 'loading' | 'noRepos'
+  ) => {
     const translations: {
-      [key in 'publicRepos' | 'previous' | 'next' | 'loading']: {
+      [key in
+        | 'publicRepos'
+        | 'previous'
+        | 'next'
+        | 'loading'
+        | 'noRepos'
+        | 'yes']: {
         en: string
         cat: string
       }
@@ -45,6 +53,14 @@ const UserDetails = () => {
       previous: { en: 'Previous', cat: 'Go backz' },
       next: { en: 'Next', cat: 'Onwardz' },
       loading: { en: 'Loading...', cat: 'Fetching da re-paws-itories...' },
+      noRepos: {
+        en: 'This user has no public repositories to show. Would you like to go back and search for another user?',
+        cat: 'Dis hooman haz no public re-paws-itories to show. Wanna go back n sniff out anudder user?',
+      },
+      yes: {
+        en: 'Yes',
+        cat: 'Mrow!',
+      },
     }
     return translations[key]?.[language] || ''
   }
@@ -101,15 +117,12 @@ const UserDetails = () => {
       )}
       {user?.public_repos == 0 && (
         <div className={styles.noRepos}>
-          <span>
-            This user has no public repositories to show. Would you like to go
-            back and search for another user?
-          </span>
+          <span>{getText('noRepos')}</span>
           <button
             disabled={false}
             className={`brutalButton`}
             onClick={() => router.push('/')}>
-            Yes
+           {getText('yes')}
           </button>
         </div>
       )}
