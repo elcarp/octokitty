@@ -1,4 +1,4 @@
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useLanguage } from '~context/language-context'
 import useGitHubData from '~hooks/useGitHubData'
 import Image from 'next/image'
@@ -15,6 +15,8 @@ const UserDetails = () => {
     username || ''
   )
 
+  const router = useRouter()
+
   const totalPages = user ? Math.ceil(user.public_repos / perPage) : 1
 
   const handleNextPage = () => {
@@ -29,9 +31,17 @@ const UserDetails = () => {
     }
   }
 
-  const getText = (key: 'publicRepos' | 'previous' | 'next' | 'loading') => {
+  const getText = (
+    key: 'publicRepos' | 'previous' | 'next' | 'loading' | 'noRepos' | 'yes'
+  ) => {
     const translations: {
-      [key in 'publicRepos' | 'previous' | 'next' | 'loading']: {
+      [key in
+        | 'publicRepos'
+        | 'previous'
+        | 'next'
+        | 'loading'
+        | 'noRepos'
+        | 'yes']: {
         en: string
         cat: string
       }
@@ -43,6 +53,14 @@ const UserDetails = () => {
       previous: { en: 'Previous', cat: 'Go backz' },
       next: { en: 'Next', cat: 'Onwardz' },
       loading: { en: 'Loading...', cat: 'Fetching da re-paws-itories...' },
+      noRepos: {
+        en: 'This user has no public repositories to show. Would you like to go back and search for another user?',
+        cat: 'Dis hooman haz no public re-paws-itories to show. Wanna go back n sniff out anudder user?',
+      },
+      yes: {
+        en: 'Yes',
+        cat: 'Mrow!',
+      },
     }
     return translations[key]?.[language] || ''
   }
@@ -97,7 +115,17 @@ const UserDetails = () => {
           <span className={`loader`}></span>
         </div>
       )}
-
+      {user?.public_repos == 0 && (
+        <div className={styles.noRepos}>
+          <span>{getText('noRepos')}</span>
+          <button
+            disabled={false}
+            className={`brutalButton`}
+            onClick={() => router.push('/')}>
+           {getText('yes')}
+          </button>
+        </div>
+      )}
       {page && totalPages > 1 && (
         <div className={styles.paginationContainer}>
           <button
